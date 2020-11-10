@@ -5,6 +5,10 @@ class Token {
 
     async export(access_token, project_id)
     {
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
         if (!access_token) {
             throw new Error("access_token is missing");
         }
@@ -17,6 +21,10 @@ class Token {
     }
 
     async getAll(access_token, customer_id, limit, offset){
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
         if (!access_token) {
             throw new Error("access_token is missing");
         }
@@ -38,6 +46,10 @@ class Token {
     }
 
     async get(access_token, project_id){
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
         if (!access_token) {
             throw new Error("access_token is missing");
         }

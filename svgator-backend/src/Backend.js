@@ -15,9 +15,6 @@ class Backend {
         if (!options.app_id) {
             throw new Error("options.app_id is missing");
         }
-        if (!options.secret_key) {
-            throw new Error("options.secret_key is missing");
-        }
 
         this.options = {...options};
     };
@@ -27,7 +24,7 @@ class Backend {
             return acc + params[curr];
         }, '');
 
-        params.hash += this.options.secret_key;
+        params.hash += this.options.secret_key || '';
         params.hash = crypto.createHash("sha256").update(params.hash).digest("hex");
     }
 

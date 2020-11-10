@@ -15,9 +15,6 @@ class SVGatorBackend {
         if (!options.app_id) {
             throw new Error("options.app_id is missing");
         }
-        if (!options.secret_key) {
-            throw new Error("options.secret_key is missing");
-        }
 
         this.options = {...defaultOptions, ...options};
 
@@ -25,6 +22,10 @@ class SVGatorBackend {
         this.token = new Token(this);
         this.projects = new Projects(this);
     };
+
+    changeSecretKey(secretKey) {
+        this.options.secret_key = secretKey;
+    }
 }
 
 module.exports = SVGatorBackend;

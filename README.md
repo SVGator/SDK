@@ -52,7 +52,32 @@ Note the HTTPS protocol in both links. That's important.
      *Notes:*
      - *URL has to use `HTTPS` as protocol, otherwise the user will see a confirmation box while he's redirected*
      - *We also provide a pop-up authentication using our JavaScript/Front-End SDK*
-
+   
+   **Obtain `auth_code` together with `app_id`**
+   
+   This feature is desired to be used mainly from applications with a single user access
+   or from pages where the owner doesn't want to have control over the application itself
+   This functionality is named dynamic app creation and involves the creation/retrieval of the `app_id` & `secret_key` together with the `auth_code`.
+   
+   An example for the implementation for this can be found inside our WordPress plugin.
+   
+   This process can be used with our pop-up authentication using our JavaScript/Front-End SDK
+    
+   Steps to follow:
+   1. Open the authentication page with the `app_id` parameter filled with the value `dynamic`
+      > https://app.svgator.com/app-auth/connect?appId=dynamic&redirect=URL
+       
+   2. When the user is redirected to your domain, the returning URL will have as parameter the `auth_code` and the `app_id`.
+      
+   3. Using the app_id & auth_code got, make a HTTP request from your backend to obtain the `access_token`.
+      You should still generate the `hash` parameter, but simply skip the secret key from the end of the hashed string (step 3 from *How to generate the `hash`*)
+      In the response you will get the `access_token` and the `secret_key` that can be used for any further requests, as defined later in this document.
+      
+   4. It's important to note, that once you ask for an auth_code using the dynamic app_id functionality, all previous auth_codes will be invalidated.
+      However already issued access_tokens will remain functional.
+      
+   5. An application ID & secret key pair obtained with this process can't be used to ask for access to other user's profile. 
+   
 2. Obtain the `access_token`
 
      This is a server-to-server request & you have to use a `hash` parameter. For more details see the [How to make a BACKEND REQUEST](#how-to-make-a-backend-request) section.
