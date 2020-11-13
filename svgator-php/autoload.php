@@ -6,7 +6,7 @@
  */
 spl_autoload_register('SVGatorSDK_autoloader');
 
-function SVGator_autoloader($className) {
+function SVGatorSDK_autoloader($className) {
 	$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
 
 	if(strpos($className, 'SVGatorSDK') === false) {
