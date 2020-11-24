@@ -54,8 +54,8 @@ class SVGatorOpener {
                     + '&origin=' + encodeURIComponent(window.origin);
                 let w = window.open(url, '_blank', SVGatorOpener.windowOptions());
 
-                windowWatcher = setInterval(function(){
-                    if (w.closed) {
+                windowWatcher = setInterval(function() {
+                    if (!w || w.closed) {
                         fail({code: -4, msg: "Authorization page closed"});
                     }
                 }, 100);

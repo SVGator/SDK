@@ -1,26 +1,35 @@
-# SVGator SDK & API documentation
+<style>
+ol {list-style-type: upper-roman}
+</style>
+# SVGator API & SDK documentation
 
-This document includes the full specification set to interact with SVGator's application proramming interface, directly via requests or via our own SDKs.
+Using SVGator's SDKs (Software Development Kit) to interact with SVGator's API (Application Programming Interface) will allow your users to connect their SVG projects to your application.
 
-Note that we strongly recommend the usage of our SDKs.
+Please note that we **strongly recommend the usage of the included SDKs** over direct API calls.
 
 ## Table of Contents
 
-> [API logic & endpoint](#api-logic-&-endpoint)
-> 
-> [Prepare connection between your app & SVGator](#prepare-connection-between-your-app-&-svgator)
->
-> [API actions](#api-actions)
-> 
-> [How to make a BACKEND REQUEST](#how-to-make-a-backend-request)
-> 
-> [URL parameters for backend requests](#url-parameters-for-backend-requests)
-> 
-> [Error handling for backend requests](#error-handling-for-backend-requests)
-> 
-> [JavaScript FrontEnd SDK](#javascript-frontend-sdk)
-> 
-> [JavaScript BackEnd SDK](#javascript-backend-sdk)
+1. [Before You Start](#before-you-start)
+2. [Fronend API](#api-logic--endpoint)
+    - Authorize Access with Popup Window
+    - Authorize Access with Redirect    
+3. [API logic & endpoint](#api-logic--endpoint)
+3. [Prepare connection between your app & SVGator](#prepare-connection-between-your-app--svgator)
+4. [API actions](#api-actions)
+5. [How to make a BACKEND REQUEST](#how-to-make-a-backend-request)
+6. [URL parameters for backend requests](#url-parameters-for-backend-requests)
+7. [Error handling for backend requests](#error-handling-for-backend-requests)
+9. [JavaScript FrontEnd SDK](#javascript-frontend-sdk)
+0. [JavaScript BackEnd SDK](#javascript-backend-sdk)
+
+### Before You Start
+
+In order to use SVGator's API & SDKs, one first must obtain an SVGator Application. To do so, please email [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.), providing your SVGator account ID and the desired usage of your SVGator application.
+
+The API keys one should receive from contact@svgator.com are:
+- The Application ID, used as "app_id" in requests, prefixed with "ai_", followed by 32 alphanumeric chars; i.e. `ai_b1357de7kj1j3ljd80aadz1eje782f2k`  
+- Your Secret Key, prefixed with "sk_", followed by 32 alphanumeric chars; i.e. `sk_58ijx87f45596ylv5jeb1a5vicdd92i4`
+- **Attention**: Your Secret Key should never be present in any requests, neither be present on Front-End.
 
 ## API logic & endpoint
 

@@ -5,10 +5,10 @@ class SVGatorFrontend {
         if (!endpoint) {
             endpoint = 'https://app.svgator.com/app-auth';
         } else {
-            endpoint = endpoint.replace(/\/+$/ + '');
+            endpoint = endpoint.replace(/\/+$/, '');
         }
         if (!redirectUrl) {
-            return await SVGatorOpener.open(appId, endpoint)
+            return await SVGatorOpener.open(appId, endpoint);
         }
         let searchParams = new URLSearchParams();
         searchParams.append('redirect', redirectUrl);
