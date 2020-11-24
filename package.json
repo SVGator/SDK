@@ -1,13 +1,10 @@
 {
   "name": "svgatorsdk",
-  // @TODO: is this the right version..?
   "version": "1.0.3",
   "description": "This document describes how to interact with SVGator's API (Application Programming Interface) and how to use SVGator's SDKs (Software Development Kit).",
-  // @TODO: what's main...? Given file does not exists;
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    // @TODO: this shouldn't be present in a public repo, should it?
     "copy-win": "xcopy /e /v /y .\\dist ..\\app\\website\\vendor\\svgator\\webapp\\spa\\assets\\dist\\sdk",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
