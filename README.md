@@ -1,6 +1,3 @@
-<style>
-ol {list-style-type: upper-roman}
-</style>
 # SVGator API & SDK documentation
 
 Using SVGator's SDKs (Software Development Kit) to interact with SVGator's API (Application Programming Interface) will allow your users to connect their SVG projects to your application.
@@ -29,7 +26,8 @@ In order to use SVGator's API & SDKs, one first must obtain an SVGator Applicati
 The API keys one should receive from contact@svgator.com are:
 - The Application ID, used as "app_id" in requests, prefixed with "ai_", followed by 32 alphanumeric chars; i.e. `ai_b1357de7kj1j3ljd80aadz1eje782f2k`  
 - Your Secret Key, prefixed with "sk_", followed by 32 alphanumeric chars; i.e. `sk_58ijx87f45596ylv5jeb1a5vicdd92i4`
-- **Attention**: Your Secret Key should never be present in any requests, neither be present on Front-End.
+
+**Attention**: Your Secret Key should never be present in any requests, neither be present on Front-End.
 
 ## API logic & endpoint
 
