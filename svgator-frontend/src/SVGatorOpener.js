@@ -66,7 +66,7 @@ class SVGatorOpener {
                         if (!data.code) {
                             success(data.msg);
                         } else {
-                            fail(data.code, data.msg);
+                            fail(data);
                         }
                     } catch(err) {
                         fail({code: -2, msg: err});
