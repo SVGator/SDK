@@ -11,6 +11,15 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     1. [Connect Users with a Popup Window](#connect-users-with-a-popup-window)
     2. [Connect Users through a Redirect URL](#connect-users-through-a-redirect-url)
     3. [Dynamic App Creation](#dynamic-app-creation)
+3. Backend API
+    1. Obtain an `access_token`
+    2. List of SVG Projects
+    3. 
+    4. 
+
+
+<hr><br><br><br>
+
 3. [API logic & endpoint](#api-logic--endpoint)
 3. [Prepare connection between your app & SVGator](#prepare-connection-between-your-app--svgator)
 4. [API actions](#api-actions)
@@ -34,10 +43,10 @@ The API keys one should receive from contact@svgator.com are shown below:
 
 **Attention**: Your Secret Key must not be included in any requests, neither be present on Front-End.
 
-Creating an application on fly is also possible using ["appId=dynamic"](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
+Creating an application on fly is also possible using [`appId=dynamic`](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
 
 ## 2. Frontend API
-We encourage to use SVGator's own [Frontend SDK](https://github.com/SVGator/SDK/tree/master/svgator-frontend) (offered as a [CDN link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a [detailed example](https://github.com/SVGator/SDK/blob/master/svgator-frontend/example.html) and as a [Node package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
+We encourage to use SVGator's own [Frontend SDK](https://github.com/SVGator/SDK/tree/master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](https://github.com/SVGator/SDK/blob/master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
 
 ### 2.I. Connect Users with a Popup Window
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
@@ -89,15 +98,17 @@ https://example.com/?auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&auth_code_exp
 After the user has successfully logged in to SVGator and authorized your application, the API will redirect them to the URL you provided, suffixed with response parameters.
 
 ##### Success response - parameters
-Same as [connecting users with a popup window](#success-response---parameters).
+Same as connecting users with a [popup window](#success-response---parameters).
 
 ### 2.III. Dynamic App Creation
-This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being [SVGator's Wordpress plugin](https://wordpress.org/plugins/svgator/)).
+This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
 
-This usecase is identical to [connecting users with a popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
+This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
-See further restrictions under [obtaining an `access_token`](#@TODO:add-link)
+See further restrictions under obtaining an [`access_token`](#@TODO:add-link).
  
+<hr><br><br><br>
+
 ## API logic & endpoint
 
 This section includes the full API specification for our system
