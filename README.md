@@ -62,8 +62,7 @@ Open a pop-up window from JS letting your users to connect their SVGator account
 | `origin` | origin of the opener window, url encoded |`https://example.com`|
  
 ##### Sample URL
-`https://app.svgator.com/app-auth/connect?appId=
-ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com`
+`https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com`
 
 ##### Success response
 ```json
@@ -97,8 +96,7 @@ Point your users to SVGator's URL to connect their SVGator account to your app.
 | `redirect` | origin of the opener window, url encoded |`https://example.com`|
  
 ##### Sample URL
-`https://app.svgator.com/app-auth/connect?appId=
-ai_b1357de7kj1j3ljd80aadz1eje782f2k&redirect=https%3A//example.com`
+`https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&redirect=https%3A//example.com`
 
 ##### Success response
 ```url
