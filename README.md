@@ -7,9 +7,10 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 ## Table of Contents
 
 1. [Before You Start](#before-you-start)
-2. [Fronend API](#api-logic--endpoint)
-    - Authorize Access with Popup Window
-    - Authorize Access with Redirect    
+2. [Fronend API](#frontend-api)
+    1. Authorize User Access with Popup Window
+    2. Authorize User Access through Redirect
+    3. Dynamic App Creation    
 3. [API logic & endpoint](#api-logic--endpoint)
 3. [Prepare connection between your app & SVGator](#prepare-connection-between-your-app--svgator)
 4. [API actions](#api-actions)
@@ -25,14 +26,61 @@ In order to use SVGator's API & SDKs, one first must obtain an SVGator Applicati
 
 The API keys one should receive from contact@svgator.com are shown below:
 
-| Name | Description | Format | Sample Value |
+| Name | Description | Notes | Sample Value |
 |------|------|------------|----------|
-| `app_id` | your Application ID |prefixed with "ai_", followed by 32 alphanumeric chars|`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
-| `secret_key` | server-side Secret Key |prefixed with "sk_", followed by 32 alphanumeric chars|`sk_58ijx87f45596ylv5jeb1a5vicdd92i4`|
+| `app_id` | Application ID |prefixed with "ai_", followed by 32 alphanumeric chars|`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
+| `secret_key` | Secret Key |prefixed with "sk_", followed by 32 alphanumeric chars|`sk_58ijx87f45596ylv5jeb1a5vicdd92i4`|
 
 
-**Attention**: Your Secret Key should never be present in any requests, neither be present on Front-End.
+**Attention**: Your Secret Key must not be included in any requests, neither be present on Front-End.
 
+Creating an application on fly is also possible using ["app_id=dynamic"](#@TODO:add-link), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
+
+## Fronend API
+### Connect Users with a Popup Window
+Open a pop-up window from JS letting your users to connect their SVGator account to your app.
+- **Endpoint**: `https://app.svgator.com/app-auth/connect`
+- **Method**: `GET`
+- **parameters**:
+
+| Name | Description | Sample Value |
+|------|------|----------|
+| `appId` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
+| `origin` | origin of the opener window, url encoded |`https://example.com`|
+ 
+```http request
+GET /app-auth/connect?appId=
+ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com
+ HTTP/1.1
+Host: app.svagtor.com
+```
+
+#### Success response
+```json
+{"code":0,"msg":{"auth_code":"ac_3db45107d0833b4bb8g43a67380e51fe","auth_code_expires":1606415498,"app_id":"ai_b1357de7kj1j3ljd80aadz1eje782f2k"}}
+```
+After the user has successfully logged in to SVGator and authorized your application, the API will return the response above.
+
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID |
+| `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
+| `auth_code_expires` | the exiration time of `auth_code` in unix timestamp |
+
+?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com#/
+
+
+ Obtain a list of labels created by the current authenticated customer
+
+```http request
+GET /api/svgator/customer/labels HTTP/1.1
+Host: app.svagtor.com
+```
+
+
+### Connect Users through a Redirect URL
+### Dynamic App Creation  
+ 
 ## API logic & endpoint
 
 This section includes the full API specification for our system
