@@ -6,16 +6,18 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 
 ## Table of Contents
 
-1. [Before You Start](#before-you-start)
-2. [Frontend API](#frontend-api)
-    1. [Connect Users with a Popup Window](#connect-users-with-a-popup-window)
-    2. [Connect Users through a Redirect URL](#connect-users-through-a-redirect-url)
-    3. [Dynamic App Creation](#dynamic-app-creation)
+1. [Before You Start](#1-before-you-start)
+2. [Frontend API](#2-frontend-api)
+    1. [Connect Users with a Popup Window](#2i-connect-users-with-a-popup-window)
+    2. [Connect Users through a Redirect URL](#2ii-connect-users-through-a-redirect-url)
+    3. [Dynamic App Creation](#2iii-dynamic-app-creation)
 3. Backend API
     1. Obtain an `access_token`
     2. List of SVG Projects
-    3. 
-    4. 
+    3. Details of an SVG Project
+    4. Export an SVG Project
+    5. Error Handling
+4. Further Resources
 
 
 <hr><br><br><br>
@@ -29,7 +31,7 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 9. [JavaScript FrontEnd SDK](#javascript-frontend-sdk)
 0. [JavaScript BackEnd SDK](#javascript-backend-sdk)
 
-### 1. Before You Start
+## 1. Before You Start
 
 In order to use SVGator's API & SDKs, one first must obtain an SVGator Application. To do so, please email [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.), providing your SVGator account ID and the desired usage of your SVGator application.
 
@@ -65,7 +67,14 @@ ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com`
 
 ##### Success response
 ```json
-{"code":0,"msg":{"auth_code":"ac_3db45107d0833b4bb8g43a67380e51fe","auth_code_expires":1606415498,"app_id":"ai_b1357de7kj1j3ljd80aadz1eje782f2k"}}
+{
+  "code":0,
+  "msg":{
+    "auth_code":"ac_3db45107d0833b4bb8g43a67380e51fe",
+    "auth_code_expires":1606415498,
+    "app_id":"ai_b1357de7kj1j3ljd80aadz1eje782f2k"
+  }
+}
 ```
 After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
 
@@ -73,7 +82,7 @@ After the user has successfully logged in to SVGator and authorized your applica
 | Name | Description |
 |------|------|
 | `app_id` | your Application ID |
-| `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
+| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO:add-link)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
 ### 2.II. Connect Users through a Redirect URL
@@ -106,7 +115,65 @@ This feature is intended for applications with a single user access or from page
 This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
 See further restrictions under obtaining an [`access_token`](#@TODO:add-link).
+
+## 3. Backend API
+This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
+### 3.I. Obtain an `access_token`
+In order order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
+
+- **Endpoint**: `https://app.local/api/app-auth/token`
+- **Method**: `GET`
+- **parameters**:
+
+| Name | Description | Sample Value |
+|------|------|----------|
+| `app_id` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
+| `auth_code` | the authentication code received from Frontend API | `ac_3db45107d0833b4bb8g43a67380e51fe` |
+| `time` | current unix timestamp | `1606424900` |
+| `hash` | security token |`b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104`|
  
+##### Sample URL
+`https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&time=1606424900&hash=b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104`
+
+```url
+https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104
+```
+##### Success response
+```json
+{
+  "access_token": "at_826a1294b59a229412546cadf1b7ef66",
+  "customer_id": "ci_90c94934c0fce81bddf42385f1432169"
+}
+```
+After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
+
+##### Success response - parameters
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID |
+| `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
+| `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr><br><br><br>
 
 ## API logic & endpoint
