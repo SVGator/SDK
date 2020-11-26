@@ -5,7 +5,8 @@ let pkg = require('./svgator-frontend/package.json');
 let version = pkg.version.replace(/[^0-9a-z]+/g, '-');
 
 module.exports = {
-    mode: 'development',
+    // mode: 'development',
+    mode: 'production',
     entry: './svgator-frontend/browser.js',
     output: {
         path: path.resolve(__dirname, 'dist'),

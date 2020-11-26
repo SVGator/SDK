@@ -4,7 +4,7 @@
  */
 
 class SVGatorOpener {
-    static windowOptions(){
+    static windowOptions() {
         let opts = {
             top: 100,
             left: 100,
@@ -13,14 +13,14 @@ class SVGatorOpener {
             menu: 0
         };
 
-        return Object.keys(opts).map((name)=>name + '=' + opts[name]).join(',');
+        return Object.keys(opts).map(name => name + '=' + opts[name]).join(',');
     }
 
-    static open(appId, endpoint){
-        return new Promise(function(resolve, reject){
+    static open(appId, endpoint) {
+        return new Promise(function(resolve, reject) {
             let windowWatcher;
             let msgSent = false;
-            function success(msg){
+            function success(msg) {
                 if (msgSent) {
                     return;
                 }
@@ -34,7 +34,7 @@ class SVGatorOpener {
                 }, 0);
             }
 
-            function fail(data){
+            function fail(data) {
                 if (msgSent) {
                     return;
                 }
@@ -60,7 +60,7 @@ class SVGatorOpener {
                     }
                 }, 100);
 
-                window.addEventListener('message', function(ev){
+                window.addEventListener('message', function(ev) {
                     try {
                         let data = JSON.parse(ev.data);
                         if (!data.code) {
@@ -78,5 +78,3 @@ class SVGatorOpener {
         })
     }
 }
-
-export default SVGatorOpener;

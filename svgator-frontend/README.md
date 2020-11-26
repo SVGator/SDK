@@ -1,13 +1,8 @@
 ## SVGator's JavaScript Frontend SDK
-
 This JS SDK lets your users connect their SVGator account with your application. Please note that SVGator **strongly recommends the usage of the Frontend SDK** over direct API calls.
 
 ### Before You Start
-<a href="http://example.com" target="_blank">example</a>
-
-
-
-In order to use SVGator's API & SDKs, one first must obtain an SVGator Application. To do so, please email [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.){:target="_blank" rel="noopener"}, providing your SVGator account ID and the desired usage of your SVGator application.
+In order to use SVGator's API & SDKs, one first must obtain an SVGator Application. To do so, please email [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.), providing your SVGator account ID and the desired usage of your SVGator application.
 
 The API keys one should receive are:
 - The Application ID, used as "app_id" in requests, prefixed with "ai_", followed by 32 alphanumeric chars; i.e. `ai_b1357de7kj1j3ljd80aadz1eje782f2k`  
@@ -15,21 +10,17 @@ The API keys one should receive are:
 - **Attention**: Your Secret Key should never be present in any requests, neither be present on Front-End. 
 
 ### Requirements
-
 - nodejs >= 7.6 (for self-hosted version)
 - none (for CDN version hosted by SVGator.com)
 
 ### Installation
-
 Run the following command in the directory where you want to install the module (for self-hosted version only):
 ```
 npm i @svgator/sdk-frontend
 ```
-
-Optionally, you can also use SVGator's CDN to load the latest version of frontend SDK into your site using [this CDN Link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js){:target="_blank"}. Find a [detailed example here](./example.html){:target="_blank"}.
+Optionally, you can also use SVGator's CDN to load the latest version of frontend SDK into your site using [this CDN Link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js). Find a [detailed example here](./example.html).
 
 ### Usage as Node Module
-
 ```js
 const SVGatorFrontend = require("@svgator/sdk-frontend");
 // You may also import our module by:
@@ -52,7 +43,7 @@ function loginWithRedirect() {
 ```
 
 ### Usage from CDN
- Find a [detailed example here](./example.html).
+Find a [detailed example here](./example.html).
 
 ```html
 <!DOCTYPE html>

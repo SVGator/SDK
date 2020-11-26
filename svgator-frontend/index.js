@@ -1,4 +1,4 @@
-import SVGatorOpener from './src/SVGatorOpener';
+const SVGatorOpener  = require('./src/SVGatorOpener');
 
 class SVGatorFrontend {
     static async auth(appId, redirectUrl, endpoint) {
@@ -17,5 +17,3 @@ class SVGatorFrontend {
         return window.open(url, "_self");
     }
 }
-
-export default SVGatorFrontend;
