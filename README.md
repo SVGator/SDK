@@ -8,8 +8,8 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 
 1. [Before You Start](#before-you-start)
 2. [Fronend API](#frontend-api)
-    1. Authorize User Access with Popup Window
-    2. Authorize User Access through Redirect
+    1. [Connect Users with a Popup Window](#connect-users-with-a-popup-window)
+    2. [Connect Users through a Redirect URL](#connect-users-through-a-redirect-url)
     3. Dynamic App Creation    
 3. [API logic & endpoint](#api-logic--endpoint)
 3. [Prepare connection between your app & SVGator](#prepare-connection-between-your-app--svgator)
@@ -37,6 +37,8 @@ The API keys one should receive from contact@svgator.com are shown below:
 Creating an application on fly is also possible using ["app_id=dynamic"](#@TODO:add-link), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
 
 ## Fronend API
+We encourage to use SVGator's own [Frontend SDK](/SVGator/SDK/tree/master/svgator-frontend) (offered as a [CDN link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a [detailed example](/SVGator/SDK/blob/master/svgator-frontend/example.html) and as a [Node package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
+
 ### Connect Users with a Popup Window
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
@@ -48,37 +50,56 @@ Open a pop-up window from JS letting your users to connect their SVGator account
 | `appId` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
 | `origin` | origin of the opener window, url encoded |`https://example.com`|
  
-```http request
-GET /app-auth/connect?appId=
-ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com
- HTTP/1.1
-Host: app.svagtor.com
-```
+#### Sample URL
+`https://app.svagtor.com/app-auth/connect?appId=
+ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com`
 
 #### Success response
 ```json
 {"code":0,"msg":{"auth_code":"ac_3db45107d0833b4bb8g43a67380e51fe","auth_code_expires":1606415498,"app_id":"ai_b1357de7kj1j3ljd80aadz1eje782f2k"}}
 ```
-After the user has successfully logged in to SVGator and authorized your application, the API will return the response above.
+After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
 
+#### Success response - parameters
 | Name | Description |
 |------|------|
 | `app_id` | your Application ID |
 | `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp |
 
-?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com#/
-
-
- Obtain a list of labels created by the current authenticated customer
-
-```http request
-GET /api/svgator/customer/labels HTTP/1.1
-Host: app.svagtor.com
-```
-
-
 ### Connect Users through a Redirect URL
+Point your users to SVGator's URL to connect their SVGator account to your app.
+- **Endpoint**: `https://app.svgator.com/app-auth/connect`
+- **Method**: `GET`
+- **parameters**:
+
+| Name | Description | Sample Value |
+|------|------|----------|
+| `appId` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
+| `redirect` | origin of the opener window, url encoded |`https://example.com`|
+ 
+#### Sample URL
+`https://app.svagtor.com/app-auth/connect?appId=
+ai_b1357de7kj1j3ljd80aadz1eje782f2k&redirect=https%3A//example.com`
+
+#### Success response
+```url
+https://example.com/?auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&auth_code_expires=1606421028&app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k
+```
+After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
+
+#### Success response - parameters
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID |
+| `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
+| `auth_code_expires` | the exiration time of `auth_code` in unix timestamp |
+
+
+
+
+
+
 ### Dynamic App Creation  
  
 ## API logic & endpoint
