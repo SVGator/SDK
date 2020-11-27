@@ -87,6 +87,7 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
 <br>
+
 ### 2.II. Connect Users through a Redirect URL
 Point your users to SVGator's URL to connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
