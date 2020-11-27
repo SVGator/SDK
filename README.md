@@ -162,6 +162,27 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
 > 
 > Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to gain access to other users' projects. 
 
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">
+        :exclamation: Attention:
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <ul>
+          <li>For dynamic application, each `token` request will invalidate previous `auth_codes`, yet already issued `access_tokens` will remain functional.</li>
+          <li>Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to gain access to other users' projects.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 - **Endpoint**: `https://app.local/api/app-auth/token`
 - **Method**: `GET`
 - **Parameters**:
