@@ -156,6 +156,8 @@ class Request {
 	}
 
 	public function make($url, $args = []) {
+	    echo $url . "\n";
+	    exit();
 		$mergedArgs = $this->mergeArgs($args);
 		$this->setUserAgent($mergedArgs);
 

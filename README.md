@@ -86,7 +86,7 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO-add-link)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
-<br><br>
+<br>
 ### 2.II. Connect Users through a Redirect URL
 Point your users to SVGator's URL to connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
@@ -122,6 +122,9 @@ See further restrictions under obtaining an [`access_token`](#@TODO-add-link).
 <br><br>
 ## 3. Backend API
 This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
+
+Again, we strongly recommend to use vendor backend SDKs ([PHP](https://github.com/SVGator/SDK/tree/doc/svgator-php) or [Node.js](https://github.com/SVGator/SDK/tree/doc/svgator-backend)) over custom implementation of API calls.
+
 ### 3.I. Obtain an `access_token`
 In order order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
 
