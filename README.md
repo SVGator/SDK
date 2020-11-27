@@ -283,147 +283,83 @@ Retrieve all SVG projects for a given user.
 ```url
 https://app.local/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&access_token=at_826a1294b59a229412546cadf1b7ef66&customer_id=ci_90c94934c0fce81bddf42385f1432169&hash=df711b4e3626d65d256842d28b43d89196f09e5ac2a772ce2e882bdb655a2bf8
 ```
-
-<details>
-    <summary>view all</summary>
-    test
-    <b>test2</b>
-</details>
-
-
 ##### Success response
 ```json
 {
     "projects": [
         {
-            "id": "pi_SCF57OSVHOC2hptNMQAp79lvFdpLd9XI",
+            "id": "pi_scf57osvhoc2hptnmqap79lvfdpld9xi",
             "title": "Web Dise\u00f1o",
-            "preview": "https://cdn.svgator.com/project/M7/50/07gORpgKdPm6M6dnWQ03oyfB1KEj/prv.svg",
+            "preview": "https://cdn.svgator.com/project/m7/50/07gorpgkdpm6m6dnwq03oyfb1kej/prv.svg",
             "created": 1606300441,
             "updated": 1606300711
         },
         {
-            "id": "pi_uInFb7Kl855j2YXPBSGltY0eO28yD8jp",
+            "id": "pi_uinfb7kl855j2yxpbsglty0eo28yd8jp",
             "title": "SAMPLE PROJECT1",
-            "preview": "https://cdn.svgator.com/project/4H/xx/6cjqKPMvz8FASvp1CH2VFavcgW5O/prv.svg",
+            "preview": "https://cdn.svgator.com/project/4h/xx/6cjqkpmvz8fasvp1ch2vfavcgw5o/prv.svg",
             "created": 1606137253,
             "updated": 1606137253
         },
-        .......................
-}
-```
-<details>
-<summary>view all</summary>
-```json
-{
-        {
-            "id": "pi_RbDPChbgVmTzlvm37JpnRA7D6NUlLM0A",
-            "title": "SAMPLE PROJECT2",
-            "preview": "https://cdn.svgator.com/project/uQ/4E/84OKDgbEijzzIWKPkGaVMUNFQfo0/prv.svg",
-            "created": 1605633029,
-            "updated": 1605633029
-        },
-        {
-            "id": "pi_ddrQ2oYL4Z7m3hTaVeSdDyUth4sBmszs",
-            "title": "SAMPLE PROJECT3",
-            "preview": "https://cdn.svgator.com/project/oq/BM/QGCd6dImUat6VUpmb5pEZwgWeOEz/prv.svg",
-            "created": 1605598760,
-            "updated": 1605598760
-        },
-        {
-            "id": "pi_CcZwaIYoV1TEDMLcQFnI9udes0aWgtjT",
-            "title": "SAMPLE PROJECT4",
-            "preview": "https://cdn.svgator.com/project/cn/Pv/ILouoJa8B5WsFbfQufIrF9J26gUw/prv.svg",
-            "created": 1605598646,
-            "updated": 1605598647
-        },
-        {
-            "id": "pi_dZdhKOapZF8wzKneTylrmx3OsyDQ9Wf6",
-            "title": "SAMPLE PROJECT5",
-            "preview": "https://cdn.svgator.com/project/nX/WL/YZfzzps21z0ZUExSOIjRHleiSlfT/prv.svg",
-            "created": 1605515682,
-            "updated": 1605515683
-        },
-        {
-            "id": "pi_X9VclUOJ2VwLlcsrs9KdrMpeXWjKCTxe",
-            "title": "SAMPLE PROJECT6",
-            "preview": "https://cdn.svgator.com/project/N9/x0/2kKfkN3ekimlrqzrwVdKRlgXx38O/prv.svg",
-            "created": 1605514740,
-            "updated": 1605514740
-        },
-        {
-            "id": "pi_2YMMsfECrw4QDihgjoS3OQIW4S83nJOL",
-            "title": "SAMPLE PROJECT7",
-            "preview": "https://cdn.svgator.com/project/Zj/Ld/QcoifFVCH6ggI4GPJugucKtFL3iy/prv.svg",
-            "created": 1605272275,
-            "updated": 1605272275
-        },
-        {
-            "id": "pi_grb9FjA6igN0ugsh1lByOYyh6LCQLmMz",
-            "title": "SAMPLE PROJECT8",
-            "preview": "https://cdn.svgator.com/project/g0/k7/rNghDQLQy27XmXL6vwqEYap8GhY0/prv.svg",
-            "created": 1605105791,
-            "updated": 1605105792
-        },
-        {
-            "id": "pi_xJaIYPWKnw7ai5litw7M7O1MhQf4a5r5",
-            "title": "SAMPLE PROJECT9",
-            "preview": "https://cdn.svgator.com/project/eR/qQ/KUcgvRuPpBQ6mTAynFSlGU1n8wQw/prv.svg",
-            "created": 1605104247,
-            "updated": 1605104248
-        },
-        {
-            "id": "pi_HKRKtC6vW5vV9fyQzELBRLxFpWQQiY7S",
-            "title": "SAMPLE PROJECT10",
-            "preview": "https://cdn.svgator.com/project/2n/YG/jJPp1MZ7vFottUMPY9bp7jIunoJ5/prv.svg",
-            "created": 1601885609,
-            "updated": 1604595234
-        },
-        {
-            "id": "pi_AAKJkugYp8PrY6SH9CT8VVpyueZZuqKD",
-            "title": "SAMPLE PROJECT11",
-            "preview": "https://cdn.svgator.com/project/Ui/vW/95El8v8Ekaiy2588WPiU4HwVYNRQ/prv.svg",
-            "created": 1595931590,
-            "updated": 1599216962
-        },
-        {
-            "id": "pi_7iVLcdxaNIBuOsHSuw4ZeSp7HdzZPfPY",
-            "title": "SAMPLE PROJECT12",
-            "preview": "https://cdn.svgator.com/project/ar/kR/Jm9LeHtiBCQba4KfCDmD8VjTqbvb/prv.svg",
-            "created": 1596198502,
-            "updated": 1598276956
-        },
-        {
-            "id": "pi_ZXLDabKF6VFvm3OIOCUbGltqYQQ4dxVG",
-            "title": "SAMPLE PROJECT13",
-            "preview": "https://cdn.svgator.com/project/xq/LN/x2ZtenthSmcmjveom4Sz5BTRUbPl/prv.svg",
-            "created": 1595930112,
-            "updated": 1595930112
-        },
-        {
-            "id": "pi_0kmRESdFBrLpWtbtJrKNpRlr5o4EOIbS",
-            "title": "SAMPLE PROJECT14",
-            "preview": "https://cdn.svgator.com/project/zt/DO/TyG7OUdB6IwCd5GNr7zjCrgqYutM/prv.svg",
-            "created": 1595929875,
-            "updated": 1595929876
-        },
-        {
-            "id": "pi_HdaWsFFkUDzbtsJLZVOcg7mg3SlZ47Dw",
-            "title": "SAMPLE PROJECT15",
-            "preview": "https://cdn.svgator.com/project/xJ/Xf/b0NoCQ3DfE36eHYAYSRU2djWbic4/prv.svg",
-            "created": 1594025316,
-            "updated": 1594025514
-        }
+        // .........................
     ]
 }
 ```
-Save both values for later usage. The given access token will allow you to retrieve all the SVGs for the given customer for a period of 6 months, or until the user revokes your permissions from their account settings.
+Only 2 sample projects are listed above, but please note that given request will return all projects of the current user.
+- Use `projects[i]->id` in further requests to obtain up to date details of the given project
+- `title` will hold the name of the project, given by its owner (the current user)
+- `preview` points to a static version of the SVG projects to be used in previews and thumbnails
+- `created` & `updated` fields are unix timestamps
+<br>
+
+### 3.V. Details of an SVG Project
+Retrieve details about a given SVG project of the current user.
+- **Endpoint**: `https://app.local/api/app-auth/project`
+- **Method**: `GET`
+- **Parameters**:
+
+| Name | Description |
+|------|------|
+| `project_id` | the ID of the SVG project, retreived by the previous request |
+| `app_id` | your Application ID |
+| `access_token` | the access token received from `token` request, specific to the given user |
+| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time` | current unix timestamp |
+| `hash` | 64 chars sha256 [security token]((#3iii-how-to-generate-the-hash-security-token)) |
+
+##### Sample URL
+```url
+https://app.svgator.com/api/app-auth/project?project_id=pi_scf57osvhoc2hptnmqap79lvfdpld9xi&app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&customer_id=ci_90c94934c0fce81bddf42385f1432169&access_token=at_826a1294b59a229412546cadf1b7ef66&time=1606424900&hash=8faa921320977dec53a206411e115cf82fddd0906c9af531682d298048ff77f8
+```
+##### Success response
+```json
+{
+    "project":
+    {
+        "id": "pi_scf57osvhoc2hptnmqap79lvfdpld9xi",
+        "title": "Web Dise\u00f1",
+        "preview": "https://cdn.svgator.com/project/m7/50/07gorpgkdpm6m6dnwq03oyfb1kej/prv.svg",
+        "label": "TEST LABEL",
+        "created": 1606300441,
+        "updated": 1606300711
+    }
+}
+```
+`label` field denotes the tag given to the project by its owner and it is optional. The rest of the response fields are identical to project list response.
 <br>
 
 
 
 
+
 <hr><br><br><br>
+
+
+
+
+
+
+
 
 
 
