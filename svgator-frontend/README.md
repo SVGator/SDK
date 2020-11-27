@@ -32,7 +32,7 @@ The API keys one should receive from [contact@svgator.com](mailto:contact@svgato
 </table>
 
 
-Creating an application on the fly is also possible using [`appId=dynamic`](../master/#2iii-dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead. 
+Creating an application on the fly is also possible using [`appId=dynamic`](../../master/#2iii-dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead. 
 
 ### Requirements
 - nodejs >= 7.6 (for self-hosted version)

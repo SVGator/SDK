@@ -132,7 +132,6 @@ Same as connecting users with a [popup window](#success-response---parameters).
 
 </p>
 </details>
-<br>
 
 ### 2.III. Dynamic App Creation
 This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
