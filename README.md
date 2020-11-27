@@ -314,6 +314,7 @@ https://app.local/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f
 ```
 <details>
 <summary>view all</summary>
+```json
 {
         {
             "id": "pi_RbDPChbgVmTzlvm37JpnRA7D6NUlLM0A",
