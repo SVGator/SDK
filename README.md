@@ -13,9 +13,11 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     3. [Dynamic App Creation](#2iii-dynamic-app-creation)
 3. [Backend API](#3-backend-api)
     1. [Obtain an `access_token`](#3i-obtain-an-access_token)
-    2. How to generate the `hash` security token
-    3. List of SVG Projects
-    4. Details of an SVG Project
+    2. [Obtain an `access_token` for a Dynamic App](#3i-obtain-an-access_token-for-a-dynamic-app)
+    3. How to generate the `hash` security token
+
+    4. List of SVG Projects
+    5. Details of an SVG Project
     5. Export an SVG Project
     6. Error Handling
 4. Further Resources
@@ -83,7 +85,7 @@ After the user has successfully logged in to SVGator and authorized your applica
 | Name | Description |
 |------|------|
 | `app_id` | your Application ID |
-| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO-add-link)|
+| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#3i-obtain-an-access_token)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 <br>
 
@@ -117,7 +119,7 @@ This feature is intended for applications with a single user access or from page
 
 This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
-See further restrictions under obtaining an [`access_token`](#@TODO-add-link).
+See further restrictions under obtaining an [`access_token`](#3i-obtain-an-access_token-for-a-dynamic-app).
 <br>
 
 ## 3. Backend API
@@ -134,7 +136,7 @@ In order order to interact with users' projects on SVGator, the next step is to 
 
 | Name | Description |
 |------|------|
-| `app_id` | your Application ID |
+| `app_id` | your Application ID, provided by SVGator |
 | `auth_code` | the authentication code received from Frontend API |
 | `time` | current unix timestamp |
 | `hash` | 64 chars sha256 security token; see generation details [below](#@TODO-add-link) |
@@ -153,7 +155,41 @@ https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&
 Save both values for later usage. The given access token will allow you to retrieve all the SVGs for the given customer for a period of 6 months, or until the user revokes your permissions from their account settings.
 <br>
 
-### How to generate the `hash` security token
+### 3.II. Obtain an `access_token` for a Dynamic App
+Generating an `access_token` for a Dynamic App is just slightly different from the previous point, the difference being that in this case `secret_key` will be returned in the response, togheter with `access_token` and `customer_id`.
+
+**Attention**: For dynamic application, each `token` requests will invalidate previous `auth_codes`, yet already issued `access_token`s will still remain functional.
+      
+Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to grant access to other users' projects. 
+
+- **Endpoint**: `https://app.local/api/app-auth/token`
+- **Method**: `GET`
+- **Parameters**:
+
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID returned by [Frontend](#2i-connect-users-with-a-popup-window) authentication |
+| `auth_code` | the authentication code received from Frontend API |
+| `time` | current unix timestamp |
+| `hash` | 64 chars sha256 security token; see generation details [below](#@TODO-add-link) |
+ 
+##### Sample URL
+```url
+https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8bb464918035de36f09a49dd5d247045f2e6daaee49ea97dc3fba363e39f7b39
+```
+##### Success response
+```json
+{
+  "access_token": "at_826a1294b59a229412546cadf1b7ef66",
+  "customer_id": "ci_90c94934c0fce81bddf42385f1432169",
+  "app_id": "ai_b1357de7kj1j3ljd80aadz1eje782f2k",
+  "secret_key": "sk_ec55dda518dd823cb404g532316c09c36"
+}
+```
+Save all values for later usage, especially the `secret_key`, which must be used to generate the [`hash`](#@TODO-add-link) security token further on.
+<br>
+
+### 3.III. How to generate the `hash` security token
 All server to server request must contain a valid `hash` parameter generated as described below. Let's stick with the previous example...
 
 
