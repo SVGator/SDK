@@ -13,13 +13,12 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     3. [Dynamic App Creation](#2iii-dynamic-app-creation)
 3. [Backend API](#3-backend-api)
     1. [Obtain an `access_token`](#3i-obtain-an-access_token)
-    2. [Obtain an `access_token` for a Dynamic App](3ii-obtain-an-access_token-for-a-dynamic-app)
+    2. [Obtain an `access_token` for a Dynamic App](#3ii-obtain-an-access_token-for-a-dynamic-app)
     3. [How to generate the `hash` security token](#3iii-how-to-generate-the-hash-security-token)
-
     4. List of SVG Projects
     5. Details of an SVG Project
-    5. Export an SVG Project
-    6. Error Handling
+    6. Export an SVG Project
+    7. Error Handling
 4. Further Resources
 
 
@@ -155,11 +154,13 @@ Save both values for later usage. The given access token will allow you to retri
 <br>
 
 ### 3.II. Obtain an `access_token` for a Dynamic App
-Generating an `access_token` for a Dynamic App is just slightly different from the previous point, the difference being that in this case `secret_key` will be returned in the response, togheter with `access_token` and `customer_id`.
+Generating an `access_token` for a Dynamic App is highly similar to the previous point, the difference being that in this case `secret_key` will be returned in the response, togheter with `access_token` and `customer_id`.
 
-**Attention**: For dynamic application, each `token` requests will invalidate previous `auth_codes`, yet already issued `access_token`s will still remain functional.
-      
-Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to grant access to other users' projects. 
+> **Attention**:
+> 
+> For dynamic application, each `token` request will invalidate previous `auth_codes`, yet already issued `access_tokens` will remain functional.
+> 
+> Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to gain access to other users' projects. 
 
 - **Endpoint**: `https://app.local/api/app-auth/token`
 - **Method**: `GET`
@@ -189,7 +190,7 @@ Save all values for later usage, especially the `secret_key`, which must be used
 <br>
 
 ### 3.III. How to generate the `hash` security token
-All server to server to server request must contain a valid `hash` parameter, generated based on request parameters as described below.
+All server to server request must contain a valid `hash` parameter, generated based on request parameters as described below.
 
 Let's consider as an example the access_token request from [3.I.](#3i-obtain-an-access_token); as a first step, let's collect all parameters from a given request, which for this example will be the following:
 
