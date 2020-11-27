@@ -24,11 +24,7 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 
 <hr><br><br><br>
 
-3. [API logic & endpoint](#api-logic--endpoint)
-3. [Prepare connection between your app & SVGator](#prepare-connection-between-your-app--svgator)
 4. [API actions](#api-actions)
-5. [How to make a BACKEND REQUEST](#how-to-make-a-backend-request)
-6. [URL parameters for backend requests](#url-parameters-for-backend-requests)
 7. [Error handling for backend requests](#error-handling-for-backend-requests)
 9. [JavaScript FrontEnd SDK](#javascript-frontend-sdk)
 0. [JavaScript BackEnd SDK](#javascript-backend-sdk)
@@ -267,35 +263,173 @@ Now generate the sha256 hash of the given string:
 `8a022f4cedc9f1145e75d50dd96021fd5da757010f000f72d4f8a358730e07f1`
 
 Use the result string as `&hash=` parameter in the request. Find examples on how to generate a hash in PHP [here](https://www.php.net/manual/en/function.hash.php), respectively Node.js [here](https://nodejs.org/api/crypto.html).
+<br>
+
+### 3.IV. List of SVG Projects
+Retrieve all SVG projects for a given user.
+- **Endpoint**: `https://app.local/api/app-auth/projects`
+- **Method**: `GET`
+- **Parameters**:
+
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID |
+| `access_token` | the access token received from `token` request, specific to the given user |
+| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time` | current unix timestamp |
+| `hash` | 64 chars sha256 [security token]((#3iii-how-to-generate-the-hash-security-token)) |
+
+##### Sample URL
+```url
+https://app.local/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&access_token=at_826a1294b59a229412546cadf1b7ef66&customer_id=ci_90c94934c0fce81bddf42385f1432169&hash=df711b4e3626d65d256842d28b43d89196f09e5ac2a772ce2e882bdb655a2bf8
+```
+
+<details>
+    <summary>view all</summary>
+    test
+    <b>test2</b>
+</details>
+
+
+##### Success response
+```json
+{
+    "projects": [
+        {
+            "id": "pi_SCF57OSVHOC2hptNMQAp79lvFdpLd9XI",
+            "title": "Web Dise\u00f1o",
+            "preview": "https://cdn.svgator.com/project/M7/50/07gORpgKdPm6M6dnWQ03oyfB1KEj/prv.svg",
+            "created": 1606300441,
+            "updated": 1606300711
+        },
+        {
+            "id": "pi_uInFb7Kl855j2YXPBSGltY0eO28yD8jp",
+            "title": "SAMPLE PROJECT1",
+            "preview": "https://cdn.svgator.com/project/4H/xx/6cjqKPMvz8FASvp1CH2VFavcgW5O/prv.svg",
+            "created": 1606137253,
+            "updated": 1606137253
+        },
+        .......................
+}
+```
+<details>
+<summary>view all</summary>
+{
+        {
+            "id": "pi_RbDPChbgVmTzlvm37JpnRA7D6NUlLM0A",
+            "title": "SAMPLE PROJECT2",
+            "preview": "https://cdn.svgator.com/project/uQ/4E/84OKDgbEijzzIWKPkGaVMUNFQfo0/prv.svg",
+            "created": 1605633029,
+            "updated": 1605633029
+        },
+        {
+            "id": "pi_ddrQ2oYL4Z7m3hTaVeSdDyUth4sBmszs",
+            "title": "SAMPLE PROJECT3",
+            "preview": "https://cdn.svgator.com/project/oq/BM/QGCd6dImUat6VUpmb5pEZwgWeOEz/prv.svg",
+            "created": 1605598760,
+            "updated": 1605598760
+        },
+        {
+            "id": "pi_CcZwaIYoV1TEDMLcQFnI9udes0aWgtjT",
+            "title": "SAMPLE PROJECT4",
+            "preview": "https://cdn.svgator.com/project/cn/Pv/ILouoJa8B5WsFbfQufIrF9J26gUw/prv.svg",
+            "created": 1605598646,
+            "updated": 1605598647
+        },
+        {
+            "id": "pi_dZdhKOapZF8wzKneTylrmx3OsyDQ9Wf6",
+            "title": "SAMPLE PROJECT5",
+            "preview": "https://cdn.svgator.com/project/nX/WL/YZfzzps21z0ZUExSOIjRHleiSlfT/prv.svg",
+            "created": 1605515682,
+            "updated": 1605515683
+        },
+        {
+            "id": "pi_X9VclUOJ2VwLlcsrs9KdrMpeXWjKCTxe",
+            "title": "SAMPLE PROJECT6",
+            "preview": "https://cdn.svgator.com/project/N9/x0/2kKfkN3ekimlrqzrwVdKRlgXx38O/prv.svg",
+            "created": 1605514740,
+            "updated": 1605514740
+        },
+        {
+            "id": "pi_2YMMsfECrw4QDihgjoS3OQIW4S83nJOL",
+            "title": "SAMPLE PROJECT7",
+            "preview": "https://cdn.svgator.com/project/Zj/Ld/QcoifFVCH6ggI4GPJugucKtFL3iy/prv.svg",
+            "created": 1605272275,
+            "updated": 1605272275
+        },
+        {
+            "id": "pi_grb9FjA6igN0ugsh1lByOYyh6LCQLmMz",
+            "title": "SAMPLE PROJECT8",
+            "preview": "https://cdn.svgator.com/project/g0/k7/rNghDQLQy27XmXL6vwqEYap8GhY0/prv.svg",
+            "created": 1605105791,
+            "updated": 1605105792
+        },
+        {
+            "id": "pi_xJaIYPWKnw7ai5litw7M7O1MhQf4a5r5",
+            "title": "SAMPLE PROJECT9",
+            "preview": "https://cdn.svgator.com/project/eR/qQ/KUcgvRuPpBQ6mTAynFSlGU1n8wQw/prv.svg",
+            "created": 1605104247,
+            "updated": 1605104248
+        },
+        {
+            "id": "pi_HKRKtC6vW5vV9fyQzELBRLxFpWQQiY7S",
+            "title": "SAMPLE PROJECT10",
+            "preview": "https://cdn.svgator.com/project/2n/YG/jJPp1MZ7vFottUMPY9bp7jIunoJ5/prv.svg",
+            "created": 1601885609,
+            "updated": 1604595234
+        },
+        {
+            "id": "pi_AAKJkugYp8PrY6SH9CT8VVpyueZZuqKD",
+            "title": "SAMPLE PROJECT11",
+            "preview": "https://cdn.svgator.com/project/Ui/vW/95El8v8Ekaiy2588WPiU4HwVYNRQ/prv.svg",
+            "created": 1595931590,
+            "updated": 1599216962
+        },
+        {
+            "id": "pi_7iVLcdxaNIBuOsHSuw4ZeSp7HdzZPfPY",
+            "title": "SAMPLE PROJECT12",
+            "preview": "https://cdn.svgator.com/project/ar/kR/Jm9LeHtiBCQba4KfCDmD8VjTqbvb/prv.svg",
+            "created": 1596198502,
+            "updated": 1598276956
+        },
+        {
+            "id": "pi_ZXLDabKF6VFvm3OIOCUbGltqYQQ4dxVG",
+            "title": "SAMPLE PROJECT13",
+            "preview": "https://cdn.svgator.com/project/xq/LN/x2ZtenthSmcmjveom4Sz5BTRUbPl/prv.svg",
+            "created": 1595930112,
+            "updated": 1595930112
+        },
+        {
+            "id": "pi_0kmRESdFBrLpWtbtJrKNpRlr5o4EOIbS",
+            "title": "SAMPLE PROJECT14",
+            "preview": "https://cdn.svgator.com/project/zt/DO/TyG7OUdB6IwCd5GNr7zjCrgqYutM/prv.svg",
+            "created": 1595929875,
+            "updated": 1595929876
+        },
+        {
+            "id": "pi_HdaWsFFkUDzbtsJLZVOcg7mg3SlZ47Dw",
+            "title": "SAMPLE PROJECT15",
+            "preview": "https://cdn.svgator.com/project/xJ/Xf/b0NoCQ3DfE36eHYAYSRU2djWbic4/prv.svg",
+            "created": 1594025316,
+            "updated": 1594025514
+        }
+    ]
+}
+```
+Save both values for later usage. The given access token will allow you to retrieve all the SVGs for the given customer for a period of 6 months, or until the user revokes your permissions from their account settings.
+<br>
 
 
 
 
 <hr><br><br><br>
-  
 
 
 
-### API actions
-     
-1. Retrieve the list of projects from the user (all SVGs he has)
-     This is a server-to-server request & you have to use a `hash` parameter. For more details see the [How to make a BACKEND REQUEST](#how-to-make-a-backend-request) section.
-    
-     Required arguments for this request: `app_id`, `time`, `access_token`, `customer_id`, `hash` <sup>[*param reference*](#url-parameters-for-backend-requests)</sup>
-    
-     Example URL:
-     > https://app.local/api/app-auth/projects?app_id=ai_abcd&time=123456&access_token=at_abcd&customer_id=ci_abcd&hash=0123456789abcdef
-    
-     The response will have a `projects` property, containing an array of projects:
-       
-    ``` {
-       "projects": [
-           {"id": "pi_abcd", "title": "abcd", "updated": 123456, ...},
-           {"id": "pi_efgh", "title": "abcd", "updated": 123456, ...},
-           ...
-       ]
-     }
-    ```
+
+
+
+
 
 2. Retrieve some extra details about a project
      This is a server-to-server request & you have to use a `hash` parameter. For more details see the [How to make a BACKEND REQUEST](#how-to-make-a-backend-request) section.
@@ -334,51 +468,8 @@ Use the result string as `&hash=` parameter in the request. Find examples on how
      </svg>
     ```
 
-### How to make a BACKEND REQUEST
-Any request you make from your server to our server has to contain a `hash` parameter.
-Below you will see how can you generate the `hash` parameter.
 
-Variables that you will need:
-1. `app_id` - your application ID
-2. `time` - current unix timestamp
-3. `secret_key` - your app's secret key __DO NOT SEND THIS ARGUMENT IN THE URL!__
-4. Any other required argument depending on the action requested
 
-__How to generate the `hash`__
-1. Sort the arguments by their name, alphabetically (`secret_key` is not included here)
-    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd
-    >
-    > =>
-    >
-    > ?`app_id`=ai_abcd&`auth_code`=ac_abcd&`time`=123456
-    
-2. Concatenate the value of the parameters, in this (alphabetically sorted) order
-    > ?app_id=`ai_abcd`&auth_code=`ac_abcd`&time=`123456`
-    >
-    > =>
-    >
-    > `ai_abcdac_abcd123456`
-
-3. Concatenate to the end of the received string you secret key as well (the string that begins w/ `sk_` 
-    > ai_abcdac_abcd123456
-    >
-    > =>
-    >
-    > ai_abcdac_abcd123456sk_abcd *(assuming your secret_key is "sk_abcd")*
-    
-4. Generate the sha256 of the received string (this is the `&hash=` parameter
-    > ai_abcdac_abcd123456sk_abcd
-    > 
-    > =>
-    >
-    > dd7641f59a809a7c0e8db2079853d35a561d9f8752e266b2e20f1355f086e516
-    
-5. Append the received `&hash=` parameter to the original link & make the request
-    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd
-    >
-    > =>
-    >
-    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd&`hash`=dd7641f59a809a7c0e8db2079853d35a561d9f8752e266b2e20f1355f086e516
 
 ### URL parameters for backend requests
    
