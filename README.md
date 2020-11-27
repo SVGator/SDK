@@ -85,7 +85,6 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `app_id` | your Application ID |
 | `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO-add-link)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
-
 <br>
 
 ### 2.II. Connect Users through a Redirect URL
@@ -111,16 +110,16 @@ After the user has successfully logged in to SVGator and authorized your applica
 
 ##### Success response - parameters
 Same as connecting users with a [popup window](#success-response---parameters).
+<br>
 
-<br><br>
 ### 2.III. Dynamic App Creation
 This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
 
 This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
 See further restrictions under obtaining an [`access_token`](#@TODO-add-link).
+<br>
 
-<br><br>
 ## 3. Backend API
 This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
 
@@ -152,7 +151,7 @@ https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&
 }
 ```
 Save both values for later usage. The given access token will allow you to retrieve all the SVGs for the given customer for a period of 6 months, or until the user revokes your permissions from their account settings.
-<br><br>
+<br>
 
 ### How to generate the `hash` security token
 All server to server request must contain a valid `hash` parameter generated as described below. Let's stick with the previous example...
