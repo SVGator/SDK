@@ -91,8 +91,12 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `auth_code` | your authentication code needed to generate a back-end [`access_token`](#3i-obtain-an-access_token)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
+##### Authorization Popup - Screenshot
+<details><summary>view</summary>
+<p align="center">
 ![Authorization Popup](../doc/assets/Authorization-Popup.png)
-
+</p>
+</details>
 
 ### 2.II. Connect Users through a Redirect URL
 Point your users to SVGator's URL to connect their SVGator account to your app.
