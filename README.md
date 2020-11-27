@@ -37,7 +37,7 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
 
 In order to use SVGator's API & SDKs, one first must obtain an SVGator Application. To do so, please email [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.), providing your SVGator account ID and the desired usage of your SVGator application.
 
-The API keys one should receive from contact@svgator.com are shown below:
+The API keys one should receive from [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.) are shown below:
 
 | Name | Description | Notes | Sample Value |
 |------|------|------------|----------|
@@ -64,10 +64,10 @@ The API keys one should receive from contact@svgator.com are shown below:
 </table>
 
 
-Creating an application on fly is also possible using [`appId=dynamic`](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
+Creating an application on the fly is also possible using [`appId=dynamic`](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
 
 ## 2. Frontend API
-We encourage to use SVGator's own [Frontend SDK](../blob/master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../blob/master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
+We encourage to use SVGator's own [Frontend SDK](../master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
 
 ### 2.I. Connect Users with a Popup Window
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
