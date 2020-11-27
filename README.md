@@ -94,7 +94,9 @@ After the user has successfully logged in to SVGator and authorized your applica
 ##### Authorization Popup - Screenshot
 <details><summary>view</summary>
 <p align="center">
+
 ![Authorization Popup](../doc/assets/Authorization-Popup.png)
+
 </p>
 </details>
 
