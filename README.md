@@ -45,12 +45,29 @@ The API keys one should receive from contact@svgator.com are shown below:
 | `secret_key` | Secret Key |prefixed with "sk_", followed by 32 alphanumeric chars|`sk_58ijx87f45596ylv5jeb1a5vicdd92i4`|
 
 
-**Attention**: Your Secret Key must not be included in any requests, neither be present on Front-End.
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">
+        :exclamation: Attention
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+          :black_medium_small_square: Your Secret Key must not be included in any requests, neither be present on Front-End.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 Creating an application on fly is also possible using [`appId=dynamic`](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
 
 ## 2. Frontend API
-We encourage to use SVGator's own [Frontend SDK](https://github.com/SVGator/SDK/tree/master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](https://github.com/SVGator/SDK/blob/master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
+We encourage to use SVGator's own [Frontend SDK](../blob/master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../blob/master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
 
 ### 2.I. Connect Users with a Popup Window
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
@@ -120,7 +137,7 @@ See further restrictions under obtaining an [`access_token`](#3i-obtain-an-acces
 ## 3. Backend API
 This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
 
-Again, we strongly recommend to use vendor backend SDKs ([PHP](https://github.com/SVGator/SDK/tree/doc/svgator-php) or [Node.js](https://github.com/SVGator/SDK/tree/doc/svgator-backend)) over custom implementation of API calls.
+Again, we strongly recommend to use vendor backend SDKs ([PHP](../blog/master/svgator-php) or [Node.js](../blob/master/svgator-backend)) over custom implementation of API calls.
 
 ### 3.I. Obtain an `access_token`
 In order order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
@@ -157,7 +174,7 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
   <thead>
     <tr>
       <th align="left">
-        :exclamation: Attention:
+        :exclamation: Attention
       </th>
     </tr>
   </thead>
@@ -228,7 +245,7 @@ In that case, `secret_key` should be considered an empty string, yet `hash` stil
   <thead>
     <tr>
       <th align="left">
-        :exclamation: Attention:
+        :exclamation: Attention
       </th>
     </tr>
   </thead>
