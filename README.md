@@ -17,17 +17,9 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     3. [How to generate the `hash` security token](#3iii-how-to-generate-the-hash-security-token)
     4. [List of SVG Projects](#3iv-list-of-svg-projects)
     5. [Details of an SVG Project](#3v-details-of-an-svg-project)
-    6. Export an Animated SVG Project
-    7. Error Handling
-4. Further Resources
-
-
-<hr><br><br><br>
-
-4. [API actions](#api-actions)
-7. [Error handling for backend requests](#error-handling-for-backend-requests)
-9. [JavaScript FrontEnd SDK](#javascript-frontend-sdk)
-0. [JavaScript BackEnd SDK](#javascript-backend-sdk)
+    6. [Export an Animated SVG Project](#3vi-export-an-animated-svg-project)
+    7. [Error Handling](#3vii-error-handling)
+4. [Further Resources](#4-further-resources)
 
 ## 1. Before You Start
 
@@ -388,11 +380,11 @@ All responses should be validated against the given structure. HTTP response cod
 
 ## 4. Further Resources
 Frontend SDK:
-- :link: SVGator Frontend SDK [documentation](../master/svgator-frontend) is avaiable on Github, as well as a [usage example](../master/svgator-frontend/example.html) 
-- :link: SVGator Frontend SDK is also available as [@svgator/sdk-backend](https://www.npmjs.com/package/@svgator/sdk-backend) Node package
+- SVGator Frontend SDK [documentation :link: ](../master/svgator-frontend) is avaiable on Github, as well as a [usage example :link: ](../master/svgator-frontend/example.html) 
+- SVGator Frontend SDK is also available as [@svgator/sdk-backend :link: ](https://www.npmjs.com/package/@svgator/sdk-backend) Node package
 
-Frontend SDK:
-- :link: SVGator provides a PHP Backend SDK available as [Github](../master/svgator-frontend)
-- :link: Node.js version is also available through npm as [@svgator/sdk-backend](https://www.npmjs.com/package/@svgator/sdk-backend)
+Backend SDK:
+- SVGator provides a PHP Backend SDK available as [Github :link: ](../master/svgator-frontend)
+- Node.js version is also available through npm as [@svgator/sdk-backend :link: ](https://www.npmjs.com/package/@svgator/sdk-backend)
 
 For further support & questions, feel free to contact us at <contact@svgator.com>.
