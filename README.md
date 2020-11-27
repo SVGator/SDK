@@ -235,4 +235,4 @@ Find documentation on:
 ## JavaScript BackEnd SDK
 
 Find documentation on:
-[@svgator/sdk-frontend](https://www.npmjs.com/package/@svgator/sdk-frontend)
+[@svgator/sdk-frontend](https://www.npmjs.com/package/@svgator/sdk-frontend); [Github](../master/svgator-frontend);
