@@ -13,8 +13,8 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     3. [Dynamic App Creation](#2iii-dynamic-app-creation)
 3. [Backend API](#3-backend-api)
     1. [Obtain an `access_token`](#3i-obtain-an-access_token)
-    2. [Obtain an `access_token` for a Dynamic App](#3i-obtain-an-access_token-for-a-dynamic-app)
-    3. How to generate the `hash` security token
+    2. [Obtain an `access_token` for a Dynamic App](3ii-obtain-an-access_token-for-a-dynamic-app)
+    3. [How to generate the `hash` security token](#3iii-how-to-generate-the-hash-security-token)
 
     4. List of SVG Projects
     5. Details of an SVG Project
@@ -87,7 +87,6 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `app_id` | your Application ID |
 | `auth_code` | your authentication code needed to generate a back-end [`access_token`](#3i-obtain-an-access_token)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
-<br>
 
 ### 2.II. Connect Users through a Redirect URL
 Point your users to SVGator's URL to connect their SVGator account to your app.
@@ -139,11 +138,11 @@ In order order to interact with users' projects on SVGator, the next step is to 
 | `app_id` | your Application ID, provided by SVGator |
 | `auth_code` | the authentication code received from Frontend API |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [below](#@TODO-add-link) |
+| `hash` | 64 chars sha256 security token; see generation details [below](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
-https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104
+https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8a022f4cedc9f1145e75d50dd96021fd5da757010f000f72d4f8a358730e07f1
 ```
 ##### Success response
 ```json
@@ -171,7 +170,7 @@ Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic a
 | `app_id` | your Application ID returned by [Frontend](#2i-connect-users-with-a-popup-window) authentication |
 | `auth_code` | the authentication code received from Frontend API |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [below](#@TODO-add-link) |
+| `hash` | 64 chars sha256 security token; see generation details [below](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
@@ -186,34 +185,52 @@ https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&
   "secret_key": "sk_ec55dda518dd823cb404g532316c09c36"
 }
 ```
-Save all values for later usage, especially the `secret_key`, which must be used to generate the [`hash`](#@TODO-add-link) security token further on.
+Save all values for later usage, especially the `secret_key`, which must be used to generate the [`hash`](#3iii-how-to-generate-the-hash-security-token) security token further on.
 <br>
 
 ### 3.III. How to generate the `hash` security token
-All server to server request must contain a valid `hash` parameter generated as described below. Let's stick with the previous example...
+All server to server to server request must contain a valid `hash` parameter, generated based on request parameters as described below.
 
+Let's consider as an example the access_token request from [3.I.](#3i-obtain-an-access_token); as a first step, let's collect all parameters from a given request, which for this example will be the following:
 
+| Name | Value |
+|------|------|
+| `app_id` | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
+| `time` | `1606424900` |
+| `auth_code` | `ac_3db45107d0833b4bb8g43a67380e51fe` |
+
+Sort the parameters alphabetically by their names:
+
+| Name | Value |
+|------|------|
+| `app_id` | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
+| `auth_code` | `ac_3db45107d0833b4bb8g43a67380e51fe` |
+| `time` | `1606424900` |
+
+Next, concatenate their values ()without any separator):
+`ai_b1357de7kj1j3ljd80aadz1eje782f2kac_3db45107d0833b4bb8g43a67380e51fe1606424900`
+
+The next step is appending `secret_key`.
+
+There is an exception tough - obtaining an `access_token` for a Dynamic App ([3.II.](#3ii-obtain-an-access_token-for-a-dynamic-app)). That is the single request in which case `secret_key` could not be used for `hash` generation, since it is not yet available to the API client.
+
+In all other cases, the `secret_key` (either recieved from SVGator or returned by dynamic app `token` request) should be appended to the given string.
+
+**Attention:** The `secret_key` itself should never be added to any of the URLs.
+
+For the sake of the example, let's assume your `secret_key` is `sk_ec55dda518dd823cb404g532316c09c36`, which appended to the end of the current `hash` will result in:
+`ai_b1357de7kj1j3ljd80aadz1eje782f2kac_3db45107d0833b4bb8g43a67380e51fe1606424900sk_ec55dda518dd823cb404g532316c09c36`
+
+Now generate the sha256 hash of the given string:
+`8a022f4cedc9f1145e75d50dd96021fd5da757010f000f72d4f8a358730e07f1`
+
+Use the result string as `&hash=` parameter in the request. Find examples on how to generate a hash in PHP [here](https://www.php.net/manual/en/function.hash.php) and Node.js [here](https://nodejs.org/api/crypto.html).
 
 Variables that you will need:
 1. `app_id` - your application ID
 2. `time` - current unix timestamp
 3. `secret_key` - your app's secret key __DO NOT SEND THIS ARGUMENT IN THE URL!__
 4. Any other required argument depending on the action requested
-
-__How to generate the `hash`__
-1. Sort the arguments by their name, alphabetically (`secret_key` is not included here)
-    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd
-    >
-    > =>
-    >
-    > ?`app_id`=ai_abcd&`auth_code`=ac_abcd&`time`=123456
-    
-2. Concatenate the value of the parameters, in this (alphabetically sorted) order
-    > ?app_id=`ai_abcd`&auth_code=`ac_abcd`&time=`123456`
-    >
-    > =>
-    >
-    > `ai_abcdac_abcd123456`
 
 3. Concatenate to the end of the received string you secret key as well (the string that begins w/ `sk_` 
     > ai_abcdac_abcd123456
