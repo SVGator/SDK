@@ -167,9 +167,9 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
   <tbody>
     <tr>
       <td>
-          :red_circle: For dynamic application, each `token` request will invalidate previous `auth_codes`, yet already issued `access_tokens` will remain functional.
+          :black_medium_small_square: For dynamic application, each `token` request will invalidate previous `auth_codes`, yet already issued `access_tokens` will remain functional.
           <br />
-          :red_circle: Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to gain access to other users' projects.
+          :black_medium_small_square: Also to be noted that an `app_id` and `secret_key` pair obtained for a dynamic app cannot be used to gain access to other users' projects.
       </td>
     </tr>
   </tbody>
