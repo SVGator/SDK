@@ -11,12 +11,13 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     1. [Connect Users with a Popup Window](#2i-connect-users-with-a-popup-window)
     2. [Connect Users through a Redirect URL](#2ii-connect-users-through-a-redirect-url)
     3. [Dynamic App Creation](#2iii-dynamic-app-creation)
-3. Backend API
-    1. Obtain an `access_token`
-    2. List of SVG Projects
-    3. Details of an SVG Project
-    4. Export an SVG Project
-    5. Error Handling
+3. [Backend API](#3-backend-api)
+    1. [Obtain an `access_token`](#3i-obtain-an-access_token)
+    2. How to generate the `hash` security token
+    3. List of SVG Projects
+    4. Details of an SVG Project
+    5. Export an SVG Project
+    6. Error Handling
 4. Further Resources
 
 
@@ -54,16 +55,17 @@ We encourage to use SVGator's own [Frontend SDK](https://github.com/SVGator/SDK/
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
 - **Method**: `GET`
-- **parameters**:
+- **Parameters**:
 
-| Name | Description | Sample Value |
-|------|------|----------|
-| `appId` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
-| `origin` | origin of the opener window, url encoded |`https://example.com`|
+| Name | Description |
+|------|------|
+| `appId` | your Application ID |
+| `origin` | origin of the opener window, url encoded |
  
 ##### Sample URL
-`https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com`
-
+```url
+https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&origin=https%3A//example.com
+```
 ##### Success response
 ```json
 {
@@ -81,23 +83,25 @@ After the user has successfully logged in to SVGator and authorized your applica
 | Name | Description |
 |------|------|
 | `app_id` | your Application ID |
-| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO:add-link)|
+| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#@TODO-add-link)|
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
+<br><br>
 ### 2.II. Connect Users through a Redirect URL
 Point your users to SVGator's URL to connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
 - **Method**: `GET`
-- **parameters**:
+- **Parameters**:
 
-| Name | Description | Sample Value |
-|------|------|----------|
-| `appId` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
-| `redirect` | origin of the opener window, url encoded |`https://example.com`|
+| Name | Description |
+|------|------|
+| `appId` | your Application ID |
+| `redirect` | origin of the opener window, url encoded |
  
 ##### Sample URL
-`https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&redirect=https%3A//example.com`
-
+```url
+https://app.svgator.com/app-auth/connect?appId=ai_b1357de7kj1j3ljd80aadz1eje782f2k&redirect=https%3A//example.com
+```
 ##### Success response
 ```url
 https://example.com/?auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&auth_code_expires=1606421028&app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k
@@ -107,13 +111,15 @@ After the user has successfully logged in to SVGator and authorized your applica
 ##### Success response - parameters
 Same as connecting users with a [popup window](#success-response---parameters).
 
+<br><br>
 ### 2.III. Dynamic App Creation
 This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
 
 This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
-See further restrictions under obtaining an [`access_token`](#@TODO:add-link).
+See further restrictions under obtaining an [`access_token`](#@TODO-add-link).
 
+<br><br>
 ## 3. Backend API
 This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
 ### 3.I. Obtain an `access_token`
@@ -121,18 +127,16 @@ In order order to interact with users' projects on SVGator, the next step is to 
 
 - **Endpoint**: `https://app.local/api/app-auth/token`
 - **Method**: `GET`
-- **parameters**:
+- **Parameters**:
 
-| Name | Description | Sample Value |
-|------|------|----------|
-| `app_id` | your Application ID |`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
-| `auth_code` | the authentication code received from Frontend API | `ac_3db45107d0833b4bb8g43a67380e51fe` |
-| `time` | current unix timestamp | `1606424900` |
-| `hash` | security token |`b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104`|
+| Name | Description |
+|------|------|
+| `app_id` | your Application ID |
+| `auth_code` | the authentication code received from Frontend API |
+| `time` | current unix timestamp |
+| `hash` | 64 chars sha256 security token; see generation details [below](#@TODO-add-link) |
  
 ##### Sample URL
-`https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&time=1606424900&hash=b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104`
-
 ```url
 https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=b6d4515f4335930008050f370ae500617fc7f692379ee38f47c84aa0ea858104
 ```
@@ -143,21 +147,55 @@ https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&
   "customer_id": "ci_90c94934c0fce81bddf42385f1432169"
 }
 ```
-After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
+Save both values for later usage. The given access token will allow you to retrieve all the SVGs for the given customer for a period of 6 months, or until the user revokes your permissions from their account settings.
+<br><br>
 
-##### Success response - parameters
-| Name | Description |
-|------|------|
-| `app_id` | your Application ID |
-| `auth_code` | your authentification code needed to generate a back-end [`access_token`](#@TODO:add-link)|
-| `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
+### How to generate the `hash` security token
+All server to server request must contain a valid `hash` parameter generated as described below. Let's stick with the previous example...
 
 
 
+Variables that you will need:
+1. `app_id` - your application ID
+2. `time` - current unix timestamp
+3. `secret_key` - your app's secret key __DO NOT SEND THIS ARGUMENT IN THE URL!__
+4. Any other required argument depending on the action requested
 
+__How to generate the `hash`__
+1. Sort the arguments by their name, alphabetically (`secret_key` is not included here)
+    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd
+    >
+    > =>
+    >
+    > ?`app_id`=ai_abcd&`auth_code`=ac_abcd&`time`=123456
+    
+2. Concatenate the value of the parameters, in this (alphabetically sorted) order
+    > ?app_id=`ai_abcd`&auth_code=`ac_abcd`&time=`123456`
+    >
+    > =>
+    >
+    > `ai_abcdac_abcd123456`
 
-
-
+3. Concatenate to the end of the received string you secret key as well (the string that begins w/ `sk_` 
+    > ai_abcdac_abcd123456
+    >
+    > =>
+    >
+    > ai_abcdac_abcd123456sk_abcd *(assuming your secret_key is "sk_abcd")*
+    
+4. Generate the sha256 of the received string (this is the `&hash=` parameter
+    > ai_abcdac_abcd123456sk_abcd
+    > 
+    > =>
+    >
+    > dd7641f59a809a7c0e8db2079853d35a561d9f8752e266b2e20f1355f086e516
+    
+5. Append the received `&hash=` parameter to the original link & make the request
+    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd
+    >
+    > =>
+    >
+    > ?`time`=123456&`app_id`=ai_abcd&`auth_code`=ac_abcd&`hash`=dd7641f59a809a7c0e8db2079853d35a561d9f8752e266b2e20f1355f086e516
 
 
 
