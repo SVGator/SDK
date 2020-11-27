@@ -15,9 +15,9 @@ Please note that we **strongly recommend the usage of the included SDKs** over d
     1. [Obtain an `access_token`](#3i-obtain-an-access_token)
     2. [Obtain an `access_token` for a Dynamic App](#3ii-obtain-an-access_token-for-a-dynamic-app)
     3. [How to generate the `hash` security token](#3iii-how-to-generate-the-hash-security-token)
-    4. List of SVG Projects
-    5. Details of an SVG Project
-    6. Export an SVG Project
+    4. [List of SVG Projects](#3iv-list-of-svg-projects)
+    5. [Details of an SVG Project](#3v-details-of-an-svg-project)
+    6. Export an Animated SVG Project
     7. Error Handling
 4. Further Resources
 
@@ -301,7 +301,6 @@ https://app.local/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f
             "created": 1606137253,
             "updated": 1606137253
         },
-        // .........................
     ]
 }
 ```
@@ -310,7 +309,6 @@ Only 2 sample projects are listed above, but please note that given request will
 - `title` will hold the name of the project, given by its owner (the current user)
 - `preview` points to a static version of the SVG projects to be used in previews and thumbnails
 - `created` & `updated` fields are unix timestamps
-<br>
 
 ### 3.V. Details of an SVG Project
 Retrieve details about a given SVG project of the current user.
@@ -325,7 +323,7 @@ Retrieve details about a given SVG project of the current user.
 | `access_token` | the access token received from `token` request, specific to the given user |
 | `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 [security token]((#3iii-how-to-generate-the-hash-security-token)) |
+| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
 
 ##### Sample URL
 ```url
@@ -348,98 +346,53 @@ https://app.svgator.com/api/app-auth/project?project_id=pi_scf57osvhoc2hptnmqap7
 `label` field denotes the tag given to the project by its owner and it is optional. The rest of the response fields are identical to project list response.
 <br>
 
+### 3.VI. Export an Animated SVG Project
+Retrieve the animated SVG project of the user as raw text.
+- **Endpoint**: `https://app.local/api/app-auth/export`
+- **Method**: `GET`
+- **Parameters**:
 
+| Name | Description |
+|------|------|
+| `project_id` | the ID of the SVG project, retreived by a previous request or stored locally |
+| `app_id` | your Application ID |
+| `access_token` | the access token received from `token` request, specific to the given user |
+| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time` | current unix timestamp |
+| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
+##### Sample URL
+```url
+https://app.svgator.com/api/app-auth/export?project_id=pi_scf57osvhoc2hptnmqap79lvfdpld9xi&app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&customer_id=ci_90c94934c0fce81bddf42385f1432169&access_token=at_826a1294b59a229412546cadf1b7ef66&time=1606424900&hash=8faa921320977dec53a206411e115cf82fddd0906c9af531682d298048ff77f8
+```
+##### Success response
+`Content-Type: image/svg+xml`
+```
+   <svg id="egain0g46a2d1" ...>
+      ...
+      <script>...</script>
+   </svg>
+```
+The response will be raw text, containing the SVG data. Save such projects locally and update them periodically or on user's action. Serve the saved version to actual end-users and/or in a web page.
+<br>
 
-
-
-<hr><br><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2. Retrieve some extra details about a project
-     This is a server-to-server request & you have to use a `hash` parameter. For more details see the [How to make a BACKEND REQUEST](#how-to-make-a-backend-request) section.
-    
-     Required arguments for this request: `app_id`, `time`, `access_token`, `project_id`, `hash` <sup>[*param reference*](#url-parameters-for-backend-requests)</sup>
-    
-     Example URL:
-     > https://app.local/api/app-auth/project?app_id=ai_abcd&time=123456&access_token=at_abcd&project_id=pi_abcd&hash=0123456789abcdef
-    
-     The response will have a `project` property, containing project details:
-    
-    ```
-     {"project": {
-        "id": "pi_abcd",
-        "title": "abcd",
-        "preview": "http://cdn.svgator.com/projects/...",
-        "label": "some-label",
-        ...
-     }}
-    ```
-
-3. Retrieve the animated SVG (Exporting a project)
-     This is a server-to-server request & you have to use a `hash` parameter. For more details see the [How to make a BACKEND REQUEST](#how-to-make-a-backend-request) section.
-    
-     Required arguments for this request: `app_id`, `time`, `access_token`, `project_id`, `hash` <sup>[*param reference*](#url-parameters-for-backend-requests)</sup>
-    
-     Example URL:
-     > https://app.local/api/app-auth/export?app_id=ai_abcd&time=123456&access_token=at_abcd&project_id=pi_abcd&hash=0123456789abcdef
-    
-     The response will be raw text, containing the SVG data
-    
-    ```
-     <svg id="egain0g46a2d1" ...>
-        ...
-        <script>...</script>
-     </svg>
-    ```
-
-
-
-
-### URL parameters for backend requests
-   
-   |Parameter       |Description
-   |:--------------:|---
-   |`app_id`        |The application ID you got from SVGator (begins w/ `ai_`) 
-   |`time`          |Current UNIX timestamp. A request can't be older than 5 minutes.
-   |`hash`          |The hash built based on the description from section [How to make a BACKEND REQUEST](#how-to-make-a-backend-request)
-   |`auth_code`     |The auth_code you got on the front-end after the user authorizes your application (begins w/ `ac_`)
-   |`access_token`  |Identifier you got back when requested for /api/app-auth/token (begins w/ `at_`)
-   |`customer_id`   |Identifier of the user (begins w/ `ci_`)
-   |`project_id`    |Identifier of one project/svg (begins w/ `pi_`)
-
-### Error handling for backend requests
-     
-On any kind of error, the response for your request has still HTTP status 200 & is in the following format:
+### 3.VII. Error Handling
+In case of error HTTP response will remain 200 and the body of the request will hold the JSON object below:
 ```
 {
     "error": "Here comes the error message",
     "error_description": "This is an optional description. Most of the cases this property is missing."
 }
 ```
+All responses should be validated against the given structure. HTTP response codes different than 200 might also appear in case of a network issue.
+<br>
 
-You should check all responses if it has the given structure or not & you should handle these errors.
+## 4. Further Resources
+Frontend SDK:
+- :link: SVGator Frontend SDK [documentation](../master/svgator-frontend) is avaiable on Github, as well as a [usage example](../master/svgator-frontend/example.html) 
+- :link: SVGator Frontend SDK is also available as [@svgator/sdk-backend](https://www.npmjs.com/package/@svgator/sdk-backend) Node package
 
-You may recieve a HTTP status code other than 200 in cases where there is a networking issue (eg. our server is unreachable from your server)
+Frontend SDK:
+- :link: SVGator provides a PHP Backend SDK available as [Github](../master/svgator-frontend)
+- :link: Node.js version is also available through npm as [@svgator/sdk-backend](https://www.npmjs.com/package/@svgator/sdk-backend)
 
-## JavaScript FrontEnd SDK
-
-Find documentation on:
-[@svgator/sdk-backend](https://www.npmjs.com/package/@svgator/sdk-backend)
-
-## JavaScript BackEnd SDK
-
-Find documentation on:
-[@svgator/sdk-frontend](https://www.npmjs.com/package/@svgator/sdk-frontend)
+For further support & questions, feel free to contact us at <contact@svgator.com>.
