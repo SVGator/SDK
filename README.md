@@ -52,10 +52,10 @@ The API keys one should receive from [contact@svgator.com](mailto:contact@svgato
 </table>
 
 
-Creating an application on the fly is also possible using [`appId=dynamic`](#dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
+Creating an application on the fly is also possible using [`appId=dynamic`](#2iii-dynamic-app-creation), yet this feature comes with restrictions. For a multi-user implementation follow the steps above instead.
 
 ## 2. Frontend API
-We encourage to use SVGator's own [Frontend SDK](../master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-backend)) over own implementation of frontend API calls.
+We encourage to use SVGator's own [Frontend SDK](../master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-frontend)) over own implementation of frontend API calls.
 
 ### 2.I. Connect Users with a Popup Window
 Open a pop-up window from JS letting your users to connect their SVGator account to your app.
@@ -117,13 +117,13 @@ Same as connecting users with a [popup window](#success-response---parameters).
 ### 2.III. Dynamic App Creation
 This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
 
-This usecase is identical to connecting users with a [popup window](#connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
+This usecase is identical to connecting users with a [popup window](#2i-connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
-See further restrictions under obtaining an [`access_token`](#3i-obtain-an-access_token-for-a-dynamic-app).
+See further restrictions under obtaining an [`access_token`](#3ii-obtain-an-access_token-for-a-dynamic-app).
 <br>
 
 ## 3. Backend API
-This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
+This section describes server to server API requests, available only for application already having authorized users, as described under Frontend [section](#2-frontend-api).
 
 Again, we strongly recommend to use vendor backend SDKs ([PHP](../master/svgator-php) or [Node.js](../master/svgator-backend)) over custom implementation of API calls.
 
@@ -139,7 +139,7 @@ In order order to interact with users' projects on SVGator, the next step is to 
 | `app_id` | your Application ID, provided by SVGator |
 | `auth_code` | the authentication code received from Frontend API |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [below](#3iii-how-to-generate-the-hash-security-token) |
+| `hash` | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
@@ -186,7 +186,7 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
 | `app_id` | your Application ID returned by [Frontend](#2i-connect-users-with-a-popup-window) authentication |
 | `auth_code` | the authentication code received from Frontend API |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [below](#3iii-how-to-generate-the-hash-security-token) |
+| `hash` | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
@@ -269,7 +269,7 @@ Retrieve all SVG projects for a given user.
 | `access_token` | the access token received from `token` request, specific to the given user |
 | `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
 | `time` | current unix timestamp |
-| `hash` | 64 chars sha256 [security token]((#3iii-how-to-generate-the-hash-security-token)) |
+| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
 
 ##### Sample URL
 ```url
@@ -381,10 +381,10 @@ All responses should be validated against the given structure. HTTP response cod
 ## 4. Further Resources
 Frontend SDK:
 - SVGator Frontend SDK [documentation :link: ](../master/svgator-frontend) is avaiable on Github, as well as a [usage example :link: ](../master/svgator-frontend/example.html) 
-- SVGator Frontend SDK is also available as [@svgator/sdk-backend :link: ](https://www.npmjs.com/package/@svgator/sdk-backend) Node package
+- SVGator Frontend SDK is also available as [@svgator/sdk-frontend :link: ](https://www.npmjs.com/package/@svgator/sdk-frontend) Node package
 
 Backend SDK:
-- SVGator provides a PHP Backend SDK available as [Github :link: ](../master/svgator-frontend)
+- SVGator provides a PHP Backend SDK available on [Github :link: ](../master/svgator-php)
 - Node.js version is also available through npm as [@svgator/sdk-backend :link: ](https://www.npmjs.com/package/@svgator/sdk-backend)
 
 For further support & questions, feel free to contact us at <contact@svgator.com>.
