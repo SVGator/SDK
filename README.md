@@ -92,8 +92,9 @@ After the user has successfully logged in to SVGator and authorized your applica
 | `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
 
 ##### Authorization Popup - Screenshot
-<details><summary>view</summary>
-<p align="center">
+<details>
+<summary>Click here to see how the popup will show up for your users</summary>
+<p>
 
 ![Authorization Popup](../doc/assets/Authorization-Popup.png)
 
@@ -121,6 +122,16 @@ After the user has successfully logged in to SVGator and authorized your applica
 
 ##### Success response - parameters
 Same as connecting users with a [popup window](#success-response---parameters).
+
+##### Authorization Redirect - Screenshot
+<details>
+<summary>Click here to see how the redirect will show up for your users</summary>
+<p>
+
+![Authorization Popup](../doc/assets/Authorization-Redirect.png)
+
+</p>
+</details>
 <br>
 
 ### 2.III. Dynamic App Creation
