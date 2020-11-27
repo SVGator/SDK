@@ -137,7 +137,7 @@ See further restrictions under obtaining an [`access_token`](#3i-obtain-an-acces
 ## 3. Backend API
 This section describes server to server API requests, available only for application already having authorized users, as described under Frontend SDK & API [section](#2-frontend-api).
 
-Again, we strongly recommend to use vendor backend SDKs ([PHP](../blog/master/svgator-php) or [Node.js](../blob/master/svgator-backend)) over custom implementation of API calls.
+Again, we strongly recommend to use vendor backend SDKs ([PHP](../master/svgator-php) or [Node.js](../master/svgator-backend)) over custom implementation of API calls.
 
 ### 3.I. Obtain an `access_token`
 In order order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
