@@ -96,7 +96,7 @@ After the user has successfully logged in to SVGator and authorized your applica
 <summary>Click here to see how the popup will show up for your users</summary>
 <p>
 
-![Authorization Popup](../doc/assets/Authorization-Popup.png)
+![Authorization Popup](../master/assets/Authorization-Popup.png)
 
 </p>
 </details>
@@ -128,7 +128,7 @@ Same as connecting users with a [popup window](#success-response---parameters).
 <summary>Click here to see how the redirect will show up for your users</summary>
 <p>
 
-![Authorization Popup](../doc/assets/Authorization-Redirect.png)
+![Authorization Redirect](../master/assets/Authorization-Redirect.png)
 
 </p>
 </details>
