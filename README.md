@@ -147,7 +147,7 @@ This section describes server to server API requests, available only for applica
 Again, we strongly recommend to use vendor backend SDKs ([PHP](../master/svgator-php) or [Node.js](../master/svgator-backend)) over custom implementation of API calls.
 
 ### 3.I. Obtain an `access_token`
-In order order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
+In order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
 
 - **Endpoint**: `https://app.local/api/app-auth/token`
 - **Method**: `GET`
@@ -244,7 +244,7 @@ Next, concatenate their values (without any separator):
 
 `ai_b1357de7kj1j3ljd80aadz1eje782f2kac_3db45107d0833b4bb8g43a67380e51fe1606424900`
 
-The next step is appending `secret_key`, but there is an exception for that - obtaining an `access_token` for a Dynamic App ([3.II.](#3ii-obtain-an-access_token-for-a-dynamic-app)). That is the single request in which case `secret_key` could not be used for `hash` generation, since it is not yet available to the API client. 
+The next step is appending `secret_key`, but there is an exception for that - obtaining an `access_token` for a Dynamic App ([3.II.](#3ii-obtain-an-access_token-for-a-dynamic-app)). That is the single request in which case `secret_key` should not be used for `hash` generation, since it is not yet available to the API client. 
 
 In that case, `secret_key` should be considered an empty string, yet `hash` still needs to be generated. In all other cases, the `secret_key` (either recieved from SVGator or returned by dynamic app `token` request) should be appended to the given string.
 

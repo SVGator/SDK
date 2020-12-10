@@ -64,7 +64,7 @@ function loginWithRedirect() {
     // @todo on `returnPage`, handle the &auth_code=ac_... argument & obtain an access_token using it
 }
 
-// initiated by a user action (i.e. click on a log in button), one should call loginWithPopup() OR loginWithRedirect(), mapped to a 
+// initiated by a user action (i.e. click on a log in button), one should call loginWithPopup() OR loginWithRedirect()
 ```
 
 ### Usage from CDN
