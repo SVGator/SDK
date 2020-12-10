@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVGator API & SDK: Connect SVGator User Account</title>
+    <style>
+        button {
+            background-color: green;
+            border: none;
+            color: #FFFFFF;
+            font-size: 19px;
+            font-weight: 300;
+            display: inline-block;
+            padding: 9px 20px;
+            margin: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color .5s;
+        }
+        button:hover {
+            background-color: darkgreen;
+        }
+        pre {
+            border: 1px solid lightgray;
+            min-height: 40px;
+            background: #000;
+            color: #fff;
+            padding: 10px;
+        }
+        }
+    </style>
+    <script src="https://cdn.svgator.com/sdk/svgator-frontend.latest.js"></script>
+    <script>
+        function getAppId() {
+            let appId = 'YOUR_APP_ID';
+            if (!appId || appId === 'YOUR_APP_ID') {
+                alert("Obtain first an Application Id from SVGator.com <contact@svgator.com>.");
+            }
+            return appId;
+        }
+        function loginWithPopup()
+        {
+            let appId = getAppId();
+            let msg = '<br>Connect To SVGator - Popup Window Response:<br>';
+            window.SVGator
+                .auth(appId, null)
+                .then(function (result) {
+                    // @todo send result.auth_code to your backend to obtain an access_token with the next back-end request
+                    console.log(result);
+                    const keys = ['error', 'error_description', 'app_id', 'auth_code', 'auth_code_expires'];
+                    keys.forEach(elem => {
+                        if (result[elem]) {
+                            msg += '> ' + elem + ': ';
+                            msg += elem === 'auth_code_expires' ? new Date(parseInt(result[elem]) * 1000) : result[elem];
+                            msg += "<br>";
+                        }
+                    });
+                    msg += result['auth_code']
+                        ? '<br><strong>> use auth_code in the next backend request to obtain an access_token.</strong><br><br>'
+                        : '';
+                }).catch(function (result) {
+                    console.log(result);
+                    msg += '> Error Code: ' + (result && result.code ? result.code : "Unknown") + "<br>";
+                    msg += '> Error Message:' + (result && result.msg || "Unknown Error") + "<br>";
+                }).finally(function() {
+                    document.querySelector('#sdkResponse').innerHTML += msg;
+                });
+        }
+
+        function loginWithRedirect()
+        {
+            let appId = getAppId();
+            window.SVGator.auth(appId, document.location.href);
+        }
+
+        function getRedirectResponse() {
+            // @todo send params.auth_code to your backend to obtain an access_token with the next back-end request
+            const params = new URLSearchParams(window.location.search);
+            const keys = ['error', 'error_description', 'app_id', 'auth_code', 'auth_code_expires'];
+            let msg = '';
+            keys.forEach(elem => {
+                if (params.get(elem)) {
+                    let v = params.get(elem);
+                    msg += '> ' + elem + ': ';
+                    msg += elem === 'auth_code_expires' ? new Date(parseInt(v) * 1000) : v;
+                    msg += "<br>";
+                }
+            });
+            if (msg) {
+                msg = '<br>Connect To SVGator - Redirect Response:<br>' + msg;
+                msg += params.get('auth_code')
+                    ? '<br><strong>> use auth_code in the next backend request to obtain an access_token.</strong><br><br>'
+                    : '';
+                document.querySelector('#sdkResponse').innerHTML += msg;
+            }
+            return;
+        }
+    </script>
+</head>
+<body>
+    <h1>SVGator API & SDK: Connect SVGator User Account</h1>
+    <button onclick="loginWithPopup()">Connect to SVGator (Popup)</button>
+    <button onclick="loginWithRedirect()">Connect to SVGator (Redirect)</button>
+    <hr>
+    <br>
+    SDK Response:
+    <br>
+    <pre id="sdkResponse"></pre>
+    <script>getRedirectResponse();</script>
+</body>
+</html>

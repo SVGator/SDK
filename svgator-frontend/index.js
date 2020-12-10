@@ -1,14 +1,14 @@
-import SVGatorOpener from './src/SVGatorOpener';
+const SVGatorOpener  = require('./src/SVGatorOpener');
 
 class SVGatorFrontend {
     static async auth(appId, redirectUrl, endpoint) {
         if (!endpoint) {
             endpoint = 'https://app.svgator.com/app-auth';
         } else {
-            endpoint = endpoint.replace(/\/+$/ + '');
+            endpoint = endpoint.replace(/\/+$/, '');
         }
         if (!redirectUrl) {
-            return await SVGatorOpener.open(appId, endpoint)
+            return await SVGatorOpener.open(appId, endpoint);
         }
         let searchParams = new URLSearchParams();
         searchParams.append('redirect', redirectUrl);
@@ -17,5 +17,3 @@ class SVGatorFrontend {
         return window.open(url, "_self");
     }
 }
-
-export default SVGatorFrontend;
