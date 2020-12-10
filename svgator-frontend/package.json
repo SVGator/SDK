@@ -1,6 +1,6 @@
 {
   "name": "@svgator/sdk-frontend",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "SDK frontend for SVGator API",
   "main": "index.js",
   "homepage": "https://github.com/SVGator/SDK",
