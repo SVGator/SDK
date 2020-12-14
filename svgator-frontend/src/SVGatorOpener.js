@@ -78,3 +78,5 @@ class SVGatorOpener {
         })
     }
 }
+
+module.exports = SVGatorOpener;

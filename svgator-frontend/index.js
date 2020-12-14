@@ -17,3 +17,5 @@ class SVGatorFrontend {
         return window.open(url, "_self");
     }
 }
+
+module.exports = SVGatorFrontend;
