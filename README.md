@@ -149,7 +149,7 @@ Again, we strongly recommend to use vendor backend SDKs ([PHP](../master/svgator
 ### 3.I. Obtain an `access_token`
 In order to interact with users' projects on SVGator, the next step is to obtain an `access_token`, which is specific to given application and to the current user.
 
-- **Endpoint**: `https://app.local/api/app-auth/token`
+- **Endpoint**: `https://app.svgator.com/api/app-auth/token`
 - **Method**: `GET`
 - **Parameters**:
 
@@ -162,7 +162,7 @@ In order to interact with users' projects on SVGator, the next step is to obtain
  
 ##### Sample URL
 ```url
-https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8a022f4cedc9f1145e75d50dd96021fd5da757010f000f72d4f8a358730e07f1
+https://app.svgator.com/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8a022f4cedc9f1145e75d50dd96021fd5da757010f000f72d4f8a358730e07f1
 ```
 ##### Success response
 ```json
@@ -196,7 +196,7 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
   </tbody>
 </table>
 
-- **Endpoint**: `https://app.local/api/app-auth/token`
+- **Endpoint**: `https://app.svgator.com/api/app-auth/token`
 - **Method**: `GET`
 - **Parameters**:
 
@@ -209,7 +209,7 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
  
 ##### Sample URL
 ```url
-https://app.local/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8bb464918035de36f09a49dd5d247045f2e6daaee49ea97dc3fba363e39f7b39
+https://app.svgator.com/api/app-auth/token?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&auth_code=ac_3db45107d0833b4bb8g43a67380e51fe&hash=8bb464918035de36f09a49dd5d247045f2e6daaee49ea97dc3fba363e39f7b39
 ```
 ##### Success response
 ```json
@@ -278,7 +278,7 @@ Use the result string as `&hash=` parameter in the request. Find examples on how
 
 ### 3.IV. List of SVG Projects
 Retrieve all SVG projects for a given user.
-- **Endpoint**: `https://app.local/api/app-auth/projects`
+- **Endpoint**: `https://app.svgator.com/api/app-auth/projects`
 - **Method**: `GET`
 - **Parameters**:
 
@@ -292,7 +292,7 @@ Retrieve all SVG projects for a given user.
 
 ##### Sample URL
 ```url
-https://app.local/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&access_token=at_826a1294b59a229412546cadf1b7ef66&customer_id=ci_90c94934c0fce81bddf42385f1432169&hash=df711b4e3626d65d256842d28b43d89196f09e5ac2a772ce2e882bdb655a2bf8
+https://app.svgator.com/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&time=1606424900&access_token=at_826a1294b59a229412546cadf1b7ef66&customer_id=ci_90c94934c0fce81bddf42385f1432169&hash=df711b4e3626d65d256842d28b43d89196f09e5ac2a772ce2e882bdb655a2bf8
 ```
 ##### Success response
 ```json
@@ -323,7 +323,7 @@ Only 2 sample projects are listed above, but please note that given request will
 
 ### 3.V. Details of an SVG Project
 Retrieve details about a given SVG project of the current user.
-- **Endpoint**: `https://app.local/api/app-auth/project`
+- **Endpoint**: `https://app.svgator.com/api/app-auth/project`
 - **Method**: `GET`
 - **Parameters**:
 
@@ -359,7 +359,7 @@ https://app.svgator.com/api/app-auth/project?project_id=pi_scf57osvhoc2hptnmqap7
 
 ### 3.VI. Export an Animated SVG Project
 Retrieve the animated SVG project of the user as raw text.
-- **Endpoint**: `https://app.local/api/app-auth/export`
+- **Endpoint**: `https://app.svgator.com/api/app-auth/export`
 - **Method**: `GET`
 - **Parameters**:
 
