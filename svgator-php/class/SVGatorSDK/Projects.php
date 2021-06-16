@@ -47,25 +47,23 @@ class Projects {
 			throw new \Exception('Could not retrieve projects.');
 		}
 
-		$projects = [];
-		foreach($json['projects'] as $jsonProject) {
-			$project = new Model\Project($jsonProject);
-			$projects[$project->id] = $project;
+		foreach($json['projects'] as $idx => $jsonProject) {
+            $json['projects'][$idx] = new Model\Project($jsonProject);
 		}
 
-
-		return array_values($projects);
+		return $json;
 	}
 
 	/**
 	 * @param int $project_id ID of the project you want to export
 	 *
-	 * @return string SVG of the requested project
+	 * @return array SVG of the requested project + export limits
 	 * @throws \Exception
 	 */
 	public function export($project_id) {
 		return Request::getInstance()->makeRequest(Request::ENTITY_EXPORT, [
 			'project_id' => $project_id,
-		], 'text');
+            'format' => 'json'
+		]);
 	}
 }

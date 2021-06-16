@@ -28,7 +28,12 @@ class Request {
 	];
 
 	private function __construct() {
-	}
+        if (in_array(@$_SERVER['HTTP_HOST'], ['wp.local', 'localhost:8081'], true)) {
+            $this->endpoint = 'https://app.svgator.net/api/app-auth/';
+        } elseif(strpos(@$_SERVER['HTTP_HOST'], '.svgator.net') !== false) {
+            $this->endpoint = 'http://app-svgator2/api/app-auth/';
+        }
+    }
 
 	public function getKey($name) {
 		if (!empty($this->{$name})) {
@@ -136,11 +141,15 @@ class Request {
 		       . '?' . http_build_query($params)
 		       . '&hash=' . $this->getHash($params);
 
-		$res = $req->make($url);
+		$responseHeaders = [];
+		$res = $req->make($url, [], $responseHeaders);
+        $contentType = !empty($responseHeaders['content-type'][0])
+            ? $responseHeaders['content-type'][0]
+            : null;
 
-		if($type === 'text') {
-			return $res;
-		}
+        if ($type === 'text' && strpos($contentType, 'application/json;') === false) {
+            return $res;
+        }
 
 		$json = json_decode($res, true);
 
@@ -149,13 +158,14 @@ class Request {
 		}
 
 		if(!empty($json['error'])) {
-			throw new \Exception($json['error']);
+		    $data = !empty($json['data']) ? $json['data'] : $json;
+            throw new \SVGatorSDK\ExportException($json['error'], 422, null, $data);
 		}
 
 		return $json;
 	}
 
-	public function make($url, $args = []) {
+	public function make($url, $args = [], &$headers = []) {
 		$mergedArgs = $this->mergeArgs($args);
 		$this->setUserAgent($mergedArgs);
 
@@ -171,7 +181,21 @@ class Request {
 		curl_setopt($handle, CURLOPT_FOLLOWLOCATION, false);
 		curl_setopt($handle, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
 
-		switch($mergedArgs['method']) {
+        // https://stackoverflow.com/questions/9183178/can-php-curl-retrieve-response-headers-and-body-in-a-single-request
+        curl_setopt($handle, CURLOPT_HEADERFUNCTION,
+            function ($curl, $header) use (&$headers) {
+                $len = strlen($header);
+                $header = explode(':', $header, 2);
+                // ignore invalid headers
+                if (count($header) < 2) {
+                    return $len;
+                }
+                $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+                return $len;
+            }
+        );
+
+        switch($mergedArgs['method']) {
 			case 'HEAD':
 				curl_setopt($handle, CURLOPT_NOBODY, true);
 				break;

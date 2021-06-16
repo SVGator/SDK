@@ -14,11 +14,19 @@ class Main {
 	 *
 	 * @return string
 	 */
-	public static function getLoginUrl($appId, $redirectUrl) {
-		return 'https://app.svgator.com/app-auth/connect'
-		       . '?appId=' . urlencode($appId)
-		       . '&redirect=' . urlencode($redirectUrl);
-	}
+    public static function getLoginUrl($appId, $redirectUrl) {
+        $host = 'https://app.svgator.com';
+        if (in_array(@$_SERVER['HTTP_HOST'], ['wp.local', 'localhost:8081'], true)) {
+            $host = 'https://app.svgator.net';
+        } elseif (strpos(@$_SERVER['HTTP_HOST'], '.svgator.net') !== false) {
+            $host = 'http://app-svgator2';
+        }
+
+        return $host
+            . '/app-auth/connect'
+            . '?appId=' . urlencode($appId)
+            . '&redirect=' . urlencode($redirectUrl);
+    }
 
 	/**
 	 * @param string $auth_code
