@@ -16,8 +16,8 @@ class Main {
 	 */
 	public static function getLoginUrl($appId, $redirectUrl) {
 		return 'https://app.svgator.com/app-auth/connect'
-		       . '?appId=' . urlencode($appId)
-		       . '&redirect=' . urlencode($redirectUrl);
+            . '?appId=' . urlencode($appId)
+            . '&redirect=' . urlencode($redirectUrl);
 	}
 
 	/**
