@@ -5,7 +5,7 @@ namespace SVGatorSDK;
 class Request {
 	private static $instance = null;
 
-	private $endpoint = 'https://app.svgator.com/api/app-auth/';
+    private $endpoint = 'https://app.svgator.com/api/app-auth/';
 	const ENTITY_TOKEN = 'token';
 	const ENTITY_PROJECT = 'project';
 	const ENTITY_PROJECTS = 'projects';
@@ -143,11 +143,11 @@ class Request {
 
 		$responseHeaders = [];
 		$res = $req->make($url, [], $responseHeaders);
-        $contentType = !empty($responseHeaders['content-type'][0])
-            ? $responseHeaders['content-type'][0]
+        $contentType = !empty($responseHeaders['content-type'])
+            ? $responseHeaders['content-type'][count($responseHeaders['content-type']) - 1]
             : null;
 
-        if ($type === 'text' && strpos($contentType, 'application/json;') === false) {
+        if ($type === 'text' && stripos($contentType, 'application/json') === false) {
             return $res;
         }
 
