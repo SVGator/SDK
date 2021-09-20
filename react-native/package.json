@@ -1,0 +1,23 @@
+{
+  "name": "@svgator/react-native",
+  "version": "1.0.0",
+  "description": "React Native plaer for SVGator's exported animations",
+  "main": "index.js",
+  "homepage": "https://github.com/SVGator/SDK",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SVGator/SDK.git",
+    "directory": "react-native"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tibor Vincze <dzsamper@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SVGator/SDK/issues"
+  },
+  "keywords": [
+    "react-native-svgator"
+  ]
+}
