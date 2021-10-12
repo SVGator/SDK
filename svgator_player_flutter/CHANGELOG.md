@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Improved gradient animators added
+
 ## 1.0.3
 
 * Dependency updated
