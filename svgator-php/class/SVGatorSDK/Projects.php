@@ -59,13 +59,38 @@ class Projects {
 
 	/**
 	 * @param int $project_id ID of the project you want to export
+	 * @param string|null $platform (optional) The platform for which you want to export. It must be one of the following strings: 'web', 'mobile'; will default to the project's setting if not set
+	 * @param string|null $framework (optional) The framework for which you want to export. It must be one of the following strings: 'react-native', 'flutter'; will default to the project's setting if not set
 	 *
-	 * @return string SVG of the requested project
+	 * @return array SVG of the requested project + export limits
 	 * @throws \Exception
 	 */
-	public function export($project_id) {
-		return Request::getInstance()->makeRequest(Request::ENTITY_EXPORT, [
+	public function export($project_id, $platform = null, $framework = null) {
+		if (!empty($platform)) {
+			if (!in_array($platform, ['web', 'mobile'])) {
+				throw new \Exception('Platform must be "web" or "mobile".');
+			}
+		}
+
+		if (!empty($framework)) {
+			$platform = 'mobile';
+			if (!in_array($framework, ['react-native', 'flutter'])) {
+				throw new \Exception('Framework must be "react-native" or "flutter".');
+			}
+		}
+
+		$params = [
 			'project_id' => $project_id,
-		], 'text');
+		];
+
+		if (!empty($platform)) {
+			$params['platform'] = $platform;
+		}
+
+		if (!empty($framework)) {
+			$params['framework'] = $framework;
+		}
+
+		return Request::getInstance()->makeRequest(Request::ENTITY_EXPORT, $params, 'json');
 	}
 }
