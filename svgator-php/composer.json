@@ -1,0 +1,19 @@
+{
+    "name": "svgator/svgator-php",
+    "description": "SVGator's backend communication SDK",
+    "authors": [
+        {
+            "name": "Vincze Tibor",
+            "email": "dzsamper@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SVGatorSDK": "class/SVGatorSDK/"
+        }
+    }
+}
