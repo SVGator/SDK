@@ -81,6 +81,7 @@ class Projects {
 
 		$params = [
 			'project_id' => $project_id,
+			'format' => 'json',
 		];
 
 		if (!empty($platform)) {
