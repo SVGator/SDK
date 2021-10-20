@@ -47,14 +47,11 @@ class Projects {
 			throw new \Exception('Could not retrieve projects.');
 		}
 
-		$projects = [];
-		foreach($json['projects'] as $jsonProject) {
-			$project = new Model\Project($jsonProject);
-			$projects[$project->id] = $project;
+		foreach($json['projects'] as $idx => $jsonProject) {
+            $json['projects'][$idx] = new Model\Project($jsonProject);
 		}
 
-
-		return array_values($projects);
+		return $json;
 	}
 
 	/**

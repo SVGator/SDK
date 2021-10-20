@@ -1,11 +1,19 @@
+const SVGatorFrontend = require("./index.js");
 
-import SVGatorFrontend from "./index.js";
+let _global = {};
+if (typeof(self) !== 'undefined') {
+    _global = self;
+} if (typeof(window) !== 'undefined') {
+    _global = window;
+} else if (typeof(global) !== 'undefined') {
+    _global = global;
+}
 
-let oldSVGator = window.SVGator;
+let oldSVGator = _global.SVGator;
 
-SVGatorFrontend.noConflict = function(){
-    window.SVGator = oldSVGator;
+SVGatorFrontend.noConflict = function() {
+    _global.SVGator = oldSVGator;
     return SVGatorFrontend;
 };
 
-window.SVGator = SVGatorFrontend;
+_global.SVGator = SVGatorFrontend;
