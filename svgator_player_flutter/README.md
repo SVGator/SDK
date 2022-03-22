@@ -65,8 +65,7 @@ class MyApp extends StatelessWidget {
 ## Useful Links
 
 For more information, check out the links below:
+* [SVGator API - Flutter Test App](https://github.com/SVGator/Flutter-Player-API)
 * [SVGator Player JS API Documentation](https://www.svgator.com/help/getting-started/svgator-player-js-api)
 * [Animate Programatically with SVGator](https://www.svgator.com/help/getting-started/animate-programmatically)
-* [SVGator API - Flutter Implementation]() 
-
-
+* [Export Flutter Animations with SVGator](https://www.svgator.com/help/getting-started/export-flutter-animations)
