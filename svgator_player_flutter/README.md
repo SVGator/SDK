@@ -4,7 +4,9 @@ SVGator's animation player implementation for Flutter.
 
 ## Getting Started
 
-Download you animated project for flutter from [app.svgator.com](https://app.svgator.com/) and import it into the project where you are willing to use it.
+* Download you animated project for flutter from [SVGator](https://app.svgator.com/) (using `External` player option)
+* Copy the `.dart` file into your project (into your main `lib` directory or into a subdirectory)
+* import the file (both `class` & `state` for API usage)
 
 ## Size
 

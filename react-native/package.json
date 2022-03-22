@@ -1,23 +1,34 @@
 {
   "name": "@svgator/react-native",
-  "version": "1.0.1",
-  "description": "React Native plaer for SVGator's exported animations",
+  "version": "2.0.0",
+  "description": "A React Native implementation that enables using SVGator animations on Android and iOS.",
   "main": "index.js",
-  "homepage": "https://github.com/SVGator/SDK",
+  "homepage": "https://www.svgator.com/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SVGator/SDK.git",
-    "directory": "react-native"
+    "url": "https://github.com/SVGator/SDK/tree/master/react-native",
+    "directory": ""
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tibor Vincze <dzsamper@gmail.com>",
+  "contributors": [
+    {
+      "name": "Lorand Zudor",
+      "email": "lzudor@omnitech-engineering.net",
+      "url": "https://www.linkedin.com/in/lorand-zudor-52539940/"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SVGator/SDK/issues"
   },
+  "dependencies": {
+    "react-native-webview": ">=10.0.0"
+  },
+
   "keywords": [
-    "react-native-svgator"
+    "react native svgator", "react native svg", "react native animated svg", "app animated svg"
   ]
 }
