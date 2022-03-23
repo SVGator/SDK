@@ -1,3 +1,10 @@
+## 2.0.0
+* Sizing & scaling issues fixed
+* Player API Support Implemented:
+    * Starting the animation programatically
+    * Capturing animation events 
+* Demo added to Readme
+
 ## 1.0.4
 
 * Improved gradient animators added
