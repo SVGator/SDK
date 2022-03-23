@@ -124,3 +124,11 @@ It will return the SVG of the requested project.
 ```php
 $svgator_app->projects()->export($project_id);
 ```
+
+You can also export the project for different platforms: `web`, `react-native` or `flutter`
+
+```php
+$svgator_app->projects()->export($project_id, 'react-native');
+```
+
+If you omit the platform parameter, the settings saved to the project will be used.

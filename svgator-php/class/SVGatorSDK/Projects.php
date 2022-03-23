@@ -56,14 +56,27 @@ class Projects {
 
 	/**
 	 * @param int $project_id ID of the project you want to export
+	 * @param string|null $platform (optional) The platform for which you want to export. It must be one of the following strings: 'web', 'react-native', 'flutter'; will default to the project's setting if not set
 	 *
 	 * @return array SVG of the requested project + export limits
 	 * @throws \Exception
 	 */
-	public function export($project_id) {
-		return Request::getInstance()->makeRequest(Request::ENTITY_EXPORT, [
+	public function export($project_id, $platform = null) {
+		if (!empty($platform)) {
+			if (!in_array($platform, ['web', 'react-native', 'flutter'])) {
+				throw new \Exception('Platform must be "web", "react-native" or "flutter".');
+			}
+		}
+
+		$params = [
 			'project_id' => $project_id,
-            'format' => 'json'
-		]);
+			'format' => 'json',
+		];
+
+		if (!empty($platform)) {
+			$params['platform'] = $platform;
+		}
+
+		return Request::getInstance()->makeRequest(Request::ENTITY_EXPORT, $params);
 	}
 }
