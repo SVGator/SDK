@@ -12,6 +12,13 @@
     "url": "git+https://github.com/SVGator/SDK.git"
   },
   "author": "Tibor Vincze <dzsamper@gmail.com>",
+  "contributors": [
+    {
+      "name": "Lorand Zudor",
+      "email": "lzudor@omnitech-engineering.net",
+      "url": "https://www.linkedin.com/in/lorand-zudor-52539940/"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SVGator/SDK/issues"

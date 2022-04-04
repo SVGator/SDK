@@ -3,15 +3,22 @@
   "version": "1.0.5",
   "description": "SDK frontend for SVGator API",
   "main": "index.js",
-  "homepage": "https://github.com/SVGator/SDK",
+  "homepage": "https://www.svgator.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SVGator/SDK.git",
-    "directory": "svgator-frontend"
+    "url": "https://github.com/SVGator/SDK/tree/master/svgator-frontend",
+    "directory": ""
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tibor Vincze <dzsamper@gmail.com>",
+  "contributors": [
+    {
+      "name": "Lorand Zudor",
+      "email": "lzudor@omnitech-engineering.net",
+      "url": "https://www.linkedin.com/in/lorand-zudor-52539940/"
+    }
+  ],
   "license": "ISC"
 }
