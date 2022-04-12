@@ -1,3 +1,6 @@
+## 2.0.1
+* Dependency update
+
 ## 2.0.0
 * Player API Support Implemented
     * Starting the animation programatically
