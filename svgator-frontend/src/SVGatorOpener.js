@@ -61,8 +61,16 @@ class SVGatorOpener {
                 }, 100);
 
                 window.addEventListener('message', function(ev) {
+                    let data
                     try {
-                        let data = JSON.parse(ev.data);
+                        data = JSON.parse(ev.data);
+                    } catch(err) {
+                        return;
+                    }
+                    if (!data || (!data.code && !data.msg)) {
+                        return;
+                    }
+                    try {
                         if (!data.code) {
                             success(data.msg);
                         } else {
