@@ -79,6 +79,26 @@ export default function App() {
 
 ## Changelog
 
+#### 2.1.0
+* Player API Support Extended with control for the following properties (through `set` method):
+    * speed
+    * fps
+    * iterations
+    * direction
+    * alternate
+    * fill mode
+* Player API new properties:
+    * player.direction
+    * player.fill
+    * player.fps
+    * player.isBackwards
+    * player.isInfinite
+    * player.isReversed
+    * player.speed
+* Player API new methods:
+    * player.togglePlay()
+    * player.set(property, value)
+    
 #### 2.0.0
 * Player API Support Implemented
     * Starting the animation programatically
