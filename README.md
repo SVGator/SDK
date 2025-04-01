@@ -27,10 +27,10 @@ In order to use SVGator's API & SDKs, one first must obtain an SVGator Applicati
 
 The API keys one should receive from [contact@svgator.com](mailto:contact@svgator.com?subject=SVGator%20Application%20Request&body=Dear%20Support%2C%0D%0A%0D%0AMy%20name%20is%20%5BJOHN%2FJANE%20DOE%5D%20from%20%5BCOMPANY%2C%20INC.%5D.%0D%0APlease%20add%20an%20SVGator%20application%20to%20my%20account%20of%20%5BEMAIL%40COMPANY.COM%5D%2C%20in%20order%20to%20offer%20my%20users%20to%20connect%20their%20SVGator%20accounts%20with%20my%20software.) are shown below:
 
-| Name | Description | Notes | Sample Value |
-|------|------|------------|----------|
-| `app_id` | Application ID |prefixed with "ai_", followed by 32 alphanumeric chars|`ai_b1357de7kj1j3ljd80aadz1eje782f2k`|
-| `secret_key` | Secret Key |prefixed with "sk_", followed by 32 alphanumeric chars|`sk_58ijx87f45596ylv5jeb1a5vicdd92i4`|
+| Name         | Description    | Notes                                                  | Sample Value                          |
+|--------------|----------------|--------------------------------------------------------|---------------------------------------|
+| `app_id`     | Application ID | prefixed with "ai_", followed by 32 alphanumeric chars | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
+| `secret_key` | Secret Key     | prefixed with "sk_", followed by 32 alphanumeric chars | `sk_58ijx87f45596ylv5jeb1a5vicdd92i4` |
 
 
 
@@ -58,14 +58,14 @@ Creating an application on the fly is also possible using [`appId=dynamic`](#2ii
 We encourage to use SVGator's own [Frontend SDK](../master/svgator-frontend) (offered as a CDN [link](https://cdn.svgator.com/sdk/svgator-frontend.latest.js) with a detailed [example](../master/svgator-frontend/example.html) as well as a Node [package](https://www.npmjs.com/package/@svgator/sdk-frontend)) over own implementation of frontend API calls.
 
 ### 2.I. Connect Users with a Popup Window
-Open a pop-up window from JS letting your users to connect their SVGator account to your app.
+Open a pop-up window from JS letting your users connect their SVGator account to your app.
 - **Endpoint**: `https://app.svgator.com/app-auth/connect`
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `appId` | your Application ID |
+| Name     | Description                              |
+|----------|------------------------------------------|
+| `appId`  | your Application ID                      |
 | `origin` | origin of the opener window, url encoded |
  
 ##### Sample URL
@@ -85,11 +85,11 @@ Open a pop-up window from JS letting your users to connect their SVGator account
 After the user has successfully logged in to SVGator and authorized your application, the API will send the string response above as a postMessage to your window.
 
 ##### Success response - parameters
-| Name | Description |
-|------|------|
-| `app_id` | your Application ID |
-| `auth_code` | your authentication code needed to generate a back-end [`access_token`](#3i-obtain-an-access_token)|
-| `auth_code_expires` | the exiration time of `auth_code` in unix timestamp; defaults to 5 minutes |
+| Name                | Description                                                                                         |
+|---------------------|-----------------------------------------------------------------------------------------------------|
+| `app_id`            | your Application ID                                                                                 |
+| `auth_code`         | your authentication code needed to generate a back-end [`access_token`](#3i-obtain-an-access_token) |
+| `auth_code_expires` | the expiration time of `auth_code` in unix timestamp; defaults to 5 minutes                         |
 
 ##### Authorization Popup - Screenshot
 <details>
@@ -107,9 +107,9 @@ Point your users to SVGator's URL to connect their SVGator account to your app.
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `appId` | your Application ID |
+| Name       | Description                              |
+|------------|------------------------------------------|
+| `appId`    | your Application ID                      |
 | `redirect` | origin of the opener window, url encoded |
  
 ##### Sample URL
@@ -134,9 +134,9 @@ Same as connecting users with a [popup window](#success-response---parameters).
 </details>
 
 ### 2.III. Dynamic App Creation
-This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's Wordpress [plugin](https://wordpress.org/plugins/svgator/)).
+This feature is intended for applications with a single user access or from pages where the owner doesn't want to have control over the application itself (an example being SVGator's WordPress [plugin](https://wordpress.org/plugins/svgator/)).
 
-This usecase is identical to connecting users with a [popup window](#2i-connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
+This use case is identical to connecting users with a [popup window](#2i-connect-users-with-a-popup-window) with the exception that one should pass `appId=dynamic`.
 
 See further restrictions under obtaining an [`access_token`](#3ii-obtain-an-access_token-for-a-dynamic-app).
 <br>
@@ -153,12 +153,12 @@ In order to interact with users' projects on SVGator, the next step is to obtain
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `app_id` | your Application ID, provided by SVGator |
-| `auth_code` | the authentication code received from Frontend API |
-| `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
+| Name        | Description                                                                                                          |
+|-------------|----------------------------------------------------------------------------------------------------------------------|
+| `app_id`    | your Application ID, provided by SVGator                                                                             |
+| `auth_code` | the authentication code received from Frontend API                                                                   |
+| `time`      | current unix timestamp                                                                                               |
+| `hash`      | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
@@ -175,7 +175,7 @@ Save both values for later usage. The given access token will allow you to retri
 <br>
 
 ### 3.II. Obtain an `access_token` for a Dynamic App
-Generating an `access_token` for a Dynamic App is highly similar to the previous point, the difference being that in this case `secret_key` will be returned in the response, togheter with `access_token` and `customer_id`.
+Generating an `access_token` for a Dynamic App is highly similar to the previous point, the difference being that in this case `secret_key` will be returned in the response, together with `access_token` and `customer_id`.
 
 <table>
   <thead>
@@ -200,12 +200,12 @@ Generating an `access_token` for a Dynamic App is highly similar to the previous
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `app_id` | your Application ID returned by [Frontend](#2i-connect-users-with-a-popup-window) authentication |
-| `auth_code` | the authentication code received from Frontend API |
-| `time` | current unix timestamp |
-| `hash` | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
+| Name        | Description                                                                                                          |
+|-------------|----------------------------------------------------------------------------------------------------------------------|
+| `app_id`    | your Application ID returned by [Frontend](#2i-connect-users-with-a-popup-window) authentication                     |
+| `auth_code` | the authentication code received from Frontend API                                                                   |
+| `time`      | current unix timestamp                                                                                               |
+| `hash`      | 64 chars sha256 security token; see generation details [under 3.III.](#3iii-how-to-generate-the-hash-security-token) |
  
 ##### Sample URL
 ```url
@@ -226,19 +226,19 @@ Save all values for later usage. `secret_key` must be used to generate the [`has
 ### 3.III. How to generate the `hash` security token
 Each server to server request must contain a valid `hash` parameter, generated based on request parameters as described below. Let's consider as an example the access_token request from [3.I.](#3i-obtain-an-access_token) As a first step, collect all parameters from a given request, which for this example will be the following:
 
-| Name | Value |
-|------|------|
-| `app_id` | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
-| `time` | `1606424900` |
+| Name        | Value                                 |
+|-------------|---------------------------------------|
+| `app_id`    | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
+| `time`      | `1606424900`                          |
 | `auth_code` | `ac_3db45107d0833b4bb8g43a67380e51fe` |
 
 Sort the parameters alphabetically by their names:
 
-| Name | Value |
-|------|------|
-| `app_id` | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
+| Name        | Value                                 |
+|-------------|---------------------------------------|
+| `app_id`    | `ai_b1357de7kj1j3ljd80aadz1eje782f2k` |
 | `auth_code` | `ac_3db45107d0833b4bb8g43a67380e51fe` |
-| `time` | `1606424900` |
+| `time`      | `1606424900`                          |
 
 Next, concatenate their values (without any separator):
 
@@ -246,7 +246,7 @@ Next, concatenate their values (without any separator):
 
 The next step is appending `secret_key`, but there is an exception for that - obtaining an `access_token` for a Dynamic App ([3.II.](#3ii-obtain-an-access_token-for-a-dynamic-app)). That is the single request in which case `secret_key` should not be used for `hash` generation, since it is not yet available to the API client. 
 
-In that case, `secret_key` should be considered an empty string, yet `hash` still needs to be generated. In all other cases, the `secret_key` (either recieved from SVGator or returned by dynamic app `token` request) should be appended to the given string.
+In that case, `secret_key` should be considered an empty string, yet `hash` still needs to be generated. In all other cases, the `secret_key` (either received from SVGator or returned by dynamic app `token` request) should be appended to the given string.
 
 <table>
   <thead>
@@ -282,13 +282,13 @@ Retrieve all SVG projects for a given user.
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `app_id` | your Application ID |
-| `access_token` | the access token received from `token` request, specific to the given user |
-| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
-| `time` | current unix timestamp |
-| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
+| Name           | Description                                                                                        |
+|----------------|----------------------------------------------------------------------------------------------------|
+| `app_id`       | your Application ID                                                                                |
+| `access_token` | the access token received from `token` request, specific to the given user                         |
+| `customer_id`  | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time`         | current unix timestamp                                                                             |
+| `hash`         | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token)                    |
 
 ##### Sample URL
 ```url
@@ -311,12 +311,12 @@ https://app.svgator.com/api/app-auth/projects?app_id=ai_b1357de7kj1j3ljd80aadz1e
             "preview": "https://cdn.svgator.com/project/4h/xx/6cjqkpmvz8fasvp1ch2vfavcgw5o/prv.svg",
             "created": 1606137253,
             "updated": 1606137253
-        },
+        }
     ]
 }
 ```
 Only 2 sample projects are listed above, but please note that given request will return all projects of the current user.
-- Use `projects[i]->id` in further requests to obtain up to date details of the given project
+- Use `projects[i]->id` in further requests to obtain up-to-date details of the given project
 - `title` will hold the name of the project, given by its owner (the current user)
 - `preview` points to a static version of the SVG projects to be used in previews and thumbnails
 - `created` & `updated` fields are unix timestamps
@@ -327,14 +327,14 @@ Retrieve details about a given SVG project of the current user.
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `project_id` | the ID of the SVG project, retreived by the previous request |
-| `app_id` | your Application ID |
-| `access_token` | the access token received from `token` request, specific to the given user |
-| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
-| `time` | current unix timestamp |
-| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
+| Name           | Description                                                                                        |
+|----------------|----------------------------------------------------------------------------------------------------|
+| `project_id`   | the ID of the SVG project, retrieved by the previous request                                       |
+| `app_id`       | your Application ID                                                                                |
+| `access_token` | the access token received from `token` request, specific to the given user                         |
+| `customer_id`  | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time`         | current unix timestamp                                                                             |
+| `hash`         | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token)                    |
 
 ##### Sample URL
 ```url
@@ -354,7 +354,7 @@ https://app.svgator.com/api/app-auth/project?project_id=pi_scf57osvhoc2hptnmqap7
     }
 }
 ```
-`label` field denotes the tag given to the project by its owner and it is optional. The rest of the response fields are identical to project list response.
+`label` field denotes the tag given to the project by its owner, and it is optional. The rest of the response fields are identical to project list response.
 <br>
 
 ### 3.VI. Export an Animated SVG Project
@@ -363,14 +363,14 @@ Retrieve the animated SVG project of the user as raw text.
 - **Method**: `GET`
 - **Parameters**:
 
-| Name | Description |
-|------|------|
-| `project_id` | the ID of the SVG project, retreived by a previous request or stored locally |
-| `app_id` | your Application ID |
-| `access_token` | the access token received from `token` request, specific to the given user |
-| `customer_id` | the customer you want to get the list of projects for; `customer_id` received from `token` request |
-| `time` | current unix timestamp |
-| `hash` | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token) |
+| Name           | Description                                                                                        |
+|----------------|----------------------------------------------------------------------------------------------------|
+| `project_id`   | the ID of the SVG project, retrieved by a previous request or stored locally                       |
+| `app_id`       | your Application ID                                                                                |
+| `access_token` | the access token received from `token` request, specific to the given user                         |
+| `customer_id`  | the customer you want to get the list of projects for; `customer_id` received from `token` request |
+| `time`         | current unix timestamp                                                                             |
+| `hash`         | 64 chars sha256 [security token](#3iii-how-to-generate-the-hash-security-token)                    |
 ##### Sample URL
 ```url
 https://app.svgator.com/api/app-auth/export?project_id=pi_scf57osvhoc2hptnmqap79lvfdpld9xi&app_id=ai_b1357de7kj1j3ljd80aadz1eje782f2k&customer_id=ci_90c94934c0fce81bddf42385f1432169&access_token=at_826a1294b59a229412546cadf1b7ef66&time=1606424900&hash=8faa921320977dec53a206411e115cf82fddd0906c9af531682d298048ff77f8
@@ -394,16 +394,16 @@ In case of error HTTP response will remain 200 and the body of the request will 
     "error_description": "This is an optional description. Most of the cases this property is missing."
 }
 ```
-All responses should be validated against the given structure. HTTP response codes different than 200 might also appear in case of a network issue.
+All responses should be validated against the given structure. HTTP response codes different from 200 might also appear in case of a network issue.
 <br>
 
 ## 4. Further Resources
 Frontend SDK:
-- SVGator Frontend SDK [documentation :link: ](../master/svgator-frontend) is avaiable on Github, as well as a [usage example :link: ](../master/svgator-frontend/example.html) 
+- SVGator Frontend SDK [documentation :link: ](../master/svgator-frontend) is available on GitHub, as well as a [usage example :link: ](../master/svgator-frontend/example.html) 
 - SVGator Frontend SDK is also available as [@svgator/sdk-frontend :link: ](https://www.npmjs.com/package/@svgator/sdk-frontend) Node package
 
 Backend SDK:
-- SVGator provides a PHP Backend SDK available on [Github :link: ](../master/svgator-php)
+- SVGator provides a PHP Backend SDK available on [GitHub :link: ](../master/svgator-php)
 - Node.js version is also available through npm as [@svgator/sdk-backend :link: ](https://www.npmjs.com/package/@svgator/sdk-backend)
 
 For further support & questions, feel free to contact us at <contact@svgator.com>.

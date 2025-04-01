@@ -1,6 +1,6 @@
 {
   "name": "@svgator/react-native",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A React Native implementation that enables using SVGator animations on Android and iOS.",
   "main": "index.js",
   "homepage": "https://www.svgator.com/",
@@ -18,6 +18,11 @@
       "name": "Lorand Zudor",
       "email": "lzudor@omnitech-engineering.net",
       "url": "https://www.linkedin.com/in/lorand-zudor-52539940/"
+    },
+    {
+      "name": "Louis Gorbe",
+      "email": "louis.gorbe@svgator.com",
+      "url": "https://www.linkedin.com/in/louis-gorbe/"
     }
   ],
   "license": "ISC",
@@ -25,7 +30,7 @@
     "url": "https://github.com/SVGator/SDK/issues"
   },
   "dependencies": {
-    "react-native-webview": ">=11.18.0"
+    "react-native-webview": ">=13.12.5"
   },
   "keywords": [
     "react native svgator",
