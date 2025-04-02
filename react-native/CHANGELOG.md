@@ -1,3 +1,6 @@
+## 3.0.1
+* Capturing player events with `onMessage` fixed
+
 ## 3.0.0
 * Dependency update
 * Updated players codebase
