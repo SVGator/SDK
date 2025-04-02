@@ -52,15 +52,14 @@ class SVGatorPlayer {
     }
 
     static _formatCode(functionToFormat) {
-        const str = functionToFormat.toString();
         return '('
-            + this.shortenCode(str)
+            + this.shortenCode(functionToFormat)
             + ')'
             + '(); true;';
     };
 
     static _mapListener() {
-        return () => {
+        return `() => {
             const player = (document.querySelector('svg') || {}).svgatorPlayer;
             if (!player || !window.ReactNativeWebView) {
                 return;
@@ -76,7 +75,7 @@ class SVGatorPlayer {
             } else {
                 player.ready(_map);
             }
-        };
+        }`;
     }
 
     static getInjectCode() {
