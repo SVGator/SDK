@@ -1,6 +1,6 @@
 {
   "name": "@svgator/react-native",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A React Native implementation that enables using SVGator animations on Android and iOS.",
   "main": "index.js",
   "homepage": "https://www.svgator.com/",

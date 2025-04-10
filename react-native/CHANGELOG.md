@@ -1,3 +1,7 @@
+## 3.0.2
+* Player update:
+  * Fix for `end` event triggering continuously at animation ending
+
 ## 3.0.1
 * Capturing player events with `onMessage` fixed
 
