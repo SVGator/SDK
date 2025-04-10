@@ -69,5 +69,56 @@ class MyApp extends StatelessWidget {
 For more information, check out the links below:
 * [SVGator API - Flutter Test App](https://github.com/SVGator/Flutter-Player-API)
 * [SVGator Player JS API Documentation](https://www.svgator.com/help/getting-started/svgator-player-js-api)
-* [Animate Programatically with SVGator](https://www.svgator.com/help/getting-started/animate-programmatically)
+* [Animate Programmatically with SVGator](https://www.svgator.com/help/getting-started/animate-programmatically)
 * [Export Flutter Animations with SVGator](https://www.svgator.com/help/getting-started/export-flutter-animations)
+
+## Changelog
+#### 3.0.0
+* Dependency update
+* Player API Support Extended with control for the following properties (through `set` method):
+    * speed
+    * fps
+    * iterations
+    * direction
+    * alternate
+    * fill mode
+* Player API new properties:
+    * player.direction
+    * player.fill
+    * player.fps
+    * player.isBackwards
+    * player.isInfinite
+    * player.isReversed
+    * player.speed
+* Player API new methods:
+    * player.togglePlay()
+    * player.set(property, value)
+
+#### 2.0.0
+* Sizing & scaling issues fixed
+* Player API Support Implemented:
+    * Starting the animation programmatically
+    * Capturing animation events
+* Demo added to Readme
+
+#### 1.0.4
+
+* Improved gradient animators added
+
+#### 1.0.3
+
+* Dependency updated
+
+#### 1.0.2
+
+* Missing null-safety operator added
+
+#### 1.0.1
+
+* Dependency update
+
+#### 1.0.0
+
+* SVGator animation player for Flutter 
+
+
