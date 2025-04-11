@@ -1,6 +1,6 @@
 {
   "name": "svgatorsdk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This document describes how to interact with SVGator's API (Application Programming Interface) and how to use SVGator's SDKs (Software Development Kit).",
   "main": "index.js",
   "scripts": {
