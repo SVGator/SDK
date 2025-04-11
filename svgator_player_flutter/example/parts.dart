@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './Test-Robot.dart' as SVGator show TestRobot;
 
 const int svgatorBlue  = 0xFF020818;
 
@@ -18,13 +17,13 @@ Map<int, Color> svgatorBlueMaterial = {
 
 Widget logo() {
   return Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: Color(svgatorBlue),
     ),
     height: 70,
-    margin: const EdgeInsets.symmetric(vertical: 10),
-    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    padding: const EdgeInsets.symmetric(horizontal: 100),
     child: Image.asset('assets/images/SVGator-logo.png'),
   );
 }
@@ -36,7 +35,7 @@ Widget logTitle(String content, BuildContext context) {
       content,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Color(0xAA000000),
+        color: Colors.white,
         fontSize: 17,
       ),
     ),
