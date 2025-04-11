@@ -150,6 +150,10 @@ For more information, check out the links below:
 * [Export Flutter Animations with SVGator](https://www.svgator.com/help/getting-started/export-flutter-animations)
 
 ## Changelog
+#### 3.0.1
+* Formatted code with `dart format .`
+* Added dartdoc comments to document the code
+
 #### 3.0.0
 * Dependency update
 * Player API Support Extended with control for the following properties (through `set` method):
