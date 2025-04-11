@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const int svgatorBlue  = 0xFF020818;
+const int svgatorBlue = 0xFF020818;
 
 Map<int, Color> svgatorBlueMaterial = {
   50: Color.fromRGBO(0x02, 0x08, 0x18, .1),

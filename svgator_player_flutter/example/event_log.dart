@@ -40,20 +40,18 @@ class EventLogState extends State<EventLog> {
         color: Color(0x552D2D2D),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-
       child: Row(
-        children:
-        _event == null
+        children: _event == null
             ? <Widget>[
-          const Text('> Log events will show up here.', style: logStyle),
-        ]
+                const Text('> Log events will show up here.', style: logStyle),
+              ]
             : <Widget>[
-          const Text('> ', style: logStyle),
-          Text('$_event', style: highlightStyle),
-          const Text(' event occurred at offset ', style: logStyle),
-          Text('$_offset', style: highlightStyle),
-          const Text('.', style: logStyle),
-        ],
+                const Text('> ', style: logStyle),
+                Text('$_event', style: highlightStyle),
+                const Text(' event occurred at offset ', style: logStyle),
+                Text('$_offset', style: highlightStyle),
+                const Text('.', style: logStyle),
+              ],
       ),
     );
   }

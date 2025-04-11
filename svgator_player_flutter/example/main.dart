@@ -39,9 +39,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final String _svgatorAboutUrl = 'https://www.svgator.com/about-us';
-  final String _documentationUrl = 'https://www.svgator.com/help/getting-started/svgator-player-js-api';
+  final String _documentationUrl =
+      'https://www.svgator.com/help/getting-started/svgator-player-js-api';
   final GlobalKey<EventLogState> _eventLog = GlobalKey();
-  final GlobalKey<svgator.ExternalDemoState> _svgatorPlayer = GlobalKey<svgator.ExternalDemoState>();
+  final GlobalKey<svgator.ExternalDemoState> _svgatorPlayer =
+      GlobalKey<svgator.ExternalDemoState>();
 
   void _eventListener([String? message]) {
     final data = jsonDecode(message ?? '{}');
@@ -84,36 +86,35 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Center(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-          children: <Widget>[
-            logo(),
-            logTitle('Svgator Player API - Event Log:', context),
-            EventLog(
-              key: _eventLog,
-            ),
-            svgator.ExternalDemo(
-              height: 310,
-              key: _svgatorPlayer,
-              onMessage: _eventListener,
-            ),
-            MediaButtons(
-              parentAction: _runCommand,
-            ),
-            TextButton(
-              onPressed: _launchDocumentationURL,
-              child: const Text(
-                "Tap here to see SVGator's Full API documentation.",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'space-mono',
-                  fontSize: 14,
-                ),
+          child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+        children: <Widget>[
+          logo(),
+          logTitle('Svgator Player API - Event Log:', context),
+          EventLog(
+            key: _eventLog,
+          ),
+          svgator.ExternalDemo(
+            height: 310,
+            key: _svgatorPlayer,
+            onMessage: _eventListener,
+          ),
+          MediaButtons(
+            parentAction: _runCommand,
+          ),
+          TextButton(
+            onPressed: _launchDocumentationURL,
+            child: const Text(
+              "Tap here to see SVGator's Full API documentation.",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'space-mono',
+                fontSize: 14,
               ),
             ),
-          ],
-        )
-      ),
+          ),
+        ],
+      )),
     );
   }
 }

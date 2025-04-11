@@ -40,7 +40,12 @@ const _icons = {
   'Destruct': Icons.eject_rounded,
 };
 
-Widget _getMediaButton(Function callback, String command, [String? display, int? param,]) {
+Widget _getMediaButton(
+  Function callback,
+  String command, [
+  String? display,
+  int? param,
+]) {
   const edgeInsets = EdgeInsets.all(0);
 
   return Container(
