@@ -1,6 +1,6 @@
 {
   "name": "svgatorsdk",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "This document describes how to interact with SVGator's API (Application Programming Interface) and how to use SVGator's SDKs (Software Development Kit).",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,11 @@
       "name": "Lorand Zudor",
       "email": "lzudor@omnitech-engineering.net",
       "url": "https://www.linkedin.com/in/lorand-zudor-52539940/"
+    },
+    {
+      "name": "Louis Gorbe",
+      "email": "louis.gorbe@svgator.com",
+      "url": "https://www.linkedin.com/in/louis-gorbe/"
     }
   ],
   "license": "ISC",
@@ -25,10 +30,10 @@
   },
   "homepage": "https://github.com/SVGator/SDK#readme",
   "devDependencies": {
-    "webpack": "^5.70.0",
+    "webpack": "^5.99.5",
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "filemanager-webpack-plugin": "^6.1.7"
+    "filemanager-webpack-plugin": "^8.0.0"
   }
 }
