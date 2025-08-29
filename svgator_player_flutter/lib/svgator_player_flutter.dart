@@ -29,8 +29,10 @@ class SVGatorPlayer {
   static String shortenCode(String str) {
     return str
         .replaceAll(RegExp(r'\s{2,}'), '')
-        .replaceAllMapped(RegExp(r'[\n\r\t\s]*([,{}=;:()?|&])[\n\r\t\s]*'),
-            (Match m) => "${m[1]}")
+        .replaceAllMapped(
+          RegExp(r'[\n\r\t\s]*([,{}=;:()?|&])[\n\r\t\s]*'),
+          (Match m) => "${m[1]}",
+        )
         .replaceAll(RegExp(r';}'), '}');
   }
 
@@ -44,7 +46,10 @@ class SVGatorPlayer {
   }
 
   static String _generateCommand(
-      String command, dynamic param, String? property) {
+    String command,
+    dynamic param,
+    String? property,
+  ) {
     const cmd =
         "((c,...a)=>{const l=()=>(document.querySelector('svg')||{}).svgatorPlayer;if(!l()){return}l().ready((l)=>l[c](...a))})";
 
@@ -66,10 +71,15 @@ class SVGatorPlayer {
   /// [command] is the method name to be called.
   /// [param] is the parameter to pass to the method.
   /// [property] is an optional property name for the method.
-  static void runCommand(WebViewController svgatorController, String command,
-      dynamic param, String? property) {
+  static void runCommand(
+    WebViewController svgatorController,
+    String command,
+    dynamic param,
+    String? property,
+  ) {
     svgatorController.runJavaScript(
-        SVGatorPlayer._generateCommand(command, param, property));
+      SVGatorPlayer._generateCommand(command, param, property),
+    );
   }
 
   /// Wraps a raw SVG string into a minimal HTML document structure that
