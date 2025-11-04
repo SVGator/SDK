@@ -1,4 +1,4 @@
-class Token {
+class Projects {
     constructor(inst){
         this.inst = inst;
     };
@@ -35,6 +35,10 @@ class Token {
 
         let args = {access_token, customer_id};
 
+        if (filter) {
+            args.filter = filter;
+        }
+
         if (limit) {
             args.limit = limit;
             if (offset) {
@@ -62,4 +66,4 @@ class Token {
     }
 }
 
-module.exports = Token;
+module.exports = Projects;

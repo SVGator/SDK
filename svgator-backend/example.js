@@ -43,6 +43,19 @@ async function run(auth_code = '') {
     const exportedProject = await svgator.projects.export(access_token, project.id);
 
     console.log("exported project:\n", exportedProject);
+
+    let {renders} = await svgator.renders.getAll(access_token, customer_id, limit, offset);
+    console.log('# of renders: ', renders.length);
+
+    if (renders.length > 0) {
+        let render_id = renders[0].id;
+        console.log('first render ID: ', render_id);
+
+        // read a single SVG project based on ID
+        let {render} = await svgator.renders.get(access_token, render_id);
+        console.log('first render: ', render);
+    }
+
     return exportedProject;
 
 }

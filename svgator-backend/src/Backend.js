@@ -29,11 +29,18 @@ class Backend {
     }
 
     async get(path, params, returnRaw){
+
         if (!params || !path) {
             throw new Error("Invalid entity to read");
         }
         params.app_id = this.options.app_id;
         params.time = Math.round(Date.now() / 1000);
+
+        for (let key in params) {
+            if (typeof params[key] === 'object') {
+                params[key] = JSON.stringify(params[key]);
+            }
+        }
 
         this.addHash(params);
         params = Object.keys(params).reduce((acc, curr) => {
@@ -73,7 +80,7 @@ class Backend {
             }).on("error", (err) => {
                 reject(err);
             });
-        })
+        });
     }
 }
 
