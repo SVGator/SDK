@@ -4,10 +4,12 @@ let auth_code = '';
 let access_token = '';
 let customer_id = '';
 let project_id = '';
+let render_id = '';
 let domain = 'http://localhost:8080';
 let action;
 let app_id = '';
 let secret_key = '';
+let filter = null;
 
 for(let i = 0; i < process.argv.length; i++) {
     let arg = process.argv[i];
@@ -29,11 +31,18 @@ for(let i = 0; i < process.argv.length; i++) {
     if (arg.toString().match(/^pi_/)) {
         project_id = arg.toString();
     }
+    if (arg.toString().match(/^ri_/)) {
+        render_id = arg.toString();
+    }
     if (arg.toString().match(/app\.svgator\.(?:com)/)) {
         domain = 'https://' + arg.toString();
     }
     if (arg.toString().match(/--action\=/)) {
         action = arg.toString().replace(/--action=/, '');
+    }
+    if (arg.toString().match(/--filter\=/)) {
+        filter = arg.toString().replace(/--filter=/, '');
+        filter = JSON.parse(filter);
     }
 }
 
@@ -45,34 +54,42 @@ let svgator = new SVGatorBackend({
 
 /**
  * @param {Promise.<object>} promise
- * @param {boolean} returnRaw
  */
-function handlePromise(promise, returnRaw) {
-    promise
-        .then(function(response) {
-            console.log(returnRaw ? response : JSON.stringify(response));
-        })
-        .catch(function(err) {
-            let error = err.message ? err.message : err.toString();
-            console.log(JSON.stringify({error}));
-        })
-        .finally(function() {
-            process.exit();
-        });
-};
+async function handlePromise(promise) {
+    try {
+        const response = await promise;
+        return typeof response === 'object' ? JSON.stringify(response) : response;
+    } catch (err) {
+        let error = err.message ? err.message : err.toString();
+        return JSON.stringify({error});
+    }
+}
+
+async function runCommand(command) {
+    const promise = eval(command);
+    const output = await handlePromise(promise);
+    console.log(JSON.stringify({command, output}));
+    process.exit();
+}
 
 switch(action) {
     case 'get-token':
-        handlePromise(svgator.token.get(auth_code));
+        void runCommand('svgator.token.get(auth_code)');
         break;
     case 'get-projects':
-        handlePromise(svgator.projects.getAll(access_token, customer_id, 1000, 0));
+        void runCommand('svgator.projects.getAll(access_token, customer_id, 1000, 0, ' + JSON.stringify(filter) + ')');
         break;
     case 'get-project':
-        handlePromise(svgator.projects.get(access_token, project_id));
+        void runCommand('svgator.projects.get(access_token, project_id)');
+        break;
+    case 'get-renders':
+        void runCommand('svgator.renders.getAll(access_token, customer_id, 1000, 0, ' + JSON.stringify(filter) + ')');
+        break;
+    case 'get-render':
+        void runCommand('svgator.renders.get(access_token, render_id)');
         break;
     case 'export':
-        handlePromise(svgator.projects.export(access_token, project_id), true);
+        void runCommand('svgator.projects.export(access_token, project_id)');
         break;
     default:
         console.log(JSON.stringify({error: "Wrong action"}));
