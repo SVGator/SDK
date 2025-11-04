@@ -48,10 +48,10 @@ class Backend {
         }, '');
         let url = this.options.endpoint + path + params;
 
-        return await this.request(url, returnRaw);
+        return await Backend.request(url, returnRaw);
     }
 
-    request(url, returnRaw){
+    static request(url, returnRaw){
         return new Promise((resolve, reject) => {
             let proto = url.match(/^https:/) ? https : http;
             proto.get(url, (resp) => {
