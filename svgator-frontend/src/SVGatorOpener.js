@@ -16,7 +16,40 @@ class SVGatorOpener {
         return Object.keys(opts).map(name => name + '=' + opts[name]).join(',');
     }
 
-    static open(appId, endpoint) {
+    static async getOauth(appId, endpoint) {
+        let url = endpoint + '/api/svgator/oauth'
+            + '?action=create&appId=' + encodeURIComponent(appId)
+        const result = await fetch(url);
+        return await result.json();
+    }
+
+    static async waitOauth(appId, endpoint, oauth_id, timeout) {
+        const startTime = new Date().getTime();
+        let lastResponse = null;
+        do {
+            const elapsedTime = (new Date().getTime() - startTime) / 1000;
+            const leftTime = Math.max(0, Math.round(timeout - elapsedTime));
+            let url = endpoint + '/api/svgator/oauth?action=read' + '&oauthId=' + encodeURIComponent(oauth_id);
+            if (appId) {
+                url += '&appId=' + encodeURIComponent(appId);
+            }
+            if (leftTime > 0) {
+                url += '&timeout=' + leftTime;
+            }
+            try {
+                const result = await fetch(url);
+                lastResponse = await result.json();
+            } catch(e) {
+
+            }
+        } while (
+                new Date().getTime() - startTime < timeout * 1000
+                && lastResponse?.status === 'pending'
+            )
+        return lastResponse;
+    }
+
+    static open(appId, endpoint, oauth_writer) {
         return new Promise(function(resolve, reject) {
             let windowWatcher;
             let msgSent = false;
@@ -52,7 +85,14 @@ class SVGatorOpener {
                 let url = endpoint + '/connect'
                     + '?appId=' + encodeURIComponent(appId)
                     + '&origin=' + encodeURIComponent(window.origin);
+                if (oauth_writer) {
+                    url += '&oauth_writer=' + encodeURIComponent(oauth_writer);
+                }
                 let w = window.open(url, '_blank', SVGatorOpener.windowOptions());
+
+                if (oauth_writer) {
+                    success("Process started");
+                }
 
                 windowWatcher = setInterval(function() {
                     if (!w || w.closed) {
