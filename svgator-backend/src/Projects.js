@@ -20,7 +20,7 @@ class Projects {
         return await this.inst.backend.get('/export', {access_token, project_id}, true);
     }
 
-    async getAll(access_token, customer_id, limit, offset){
+    async getAll(access_token, customer_id, limit, offset, filter){
         if (!this.inst.options.secret_key) {
             throw new Error("options.secret_key is missing");
         }
