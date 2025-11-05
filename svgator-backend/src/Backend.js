@@ -8,6 +8,7 @@ const crypto = require('crypto');
  */
 
 class Backend {
+    static requester = null;
     constructor(options){
         if (!options) {
             throw new Error("Options are missing");
@@ -51,7 +52,10 @@ class Backend {
         return await Backend.request(url, returnRaw);
     }
 
-    static request(url, returnRaw){
+    static request(url, returnRaw, requester){
+        if (this.requester) {
+            return this.requester(url, returnRaw);
+        }
         return new Promise((resolve, reject) => {
             let proto = url.match(/^https:/) ? https : http;
             proto.get(url, (resp) => {

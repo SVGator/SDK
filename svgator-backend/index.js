@@ -16,7 +16,7 @@ function filterEndpoint(endpoint){
 }
 
 class SVGatorBackend {
-    constructor(options){
+    constructor(options, requester){
         if (!options) {
             throw new Error("Options are missing");
         }
@@ -26,16 +26,23 @@ class SVGatorBackend {
 
         this.options = {...defaultOptions, ...options};
 
+        if (requester) {
+            Backend.requester = requester;
+        }
+        Backend.requester = requester;
         this.backend = new Backend(this.options);
         this.token = new Token(this);
         this.projects = new Projects(this);
         this.renders = new Renders(this);
     };
 
-    static async getOauth(appId, endpoint) {
+    static async getOauth(appId, endpoint, requester = null) {
         endpoint = filterEndpoint(endpoint);
         let url = endpoint + OAUTH_API
             + '?action=create&appId=' + encodeURIComponent(appId)
+        if (requester) {
+            Backend.requester = requester;
+        }
         const json = await Backend.request(url);
         return {
             url: endpoint + '/app-auth/connect?appId=' + encodeURIComponent(appId || 'dynamic') + '&oauth_writer=' + encodeURIComponent(json?.oauth?.writer),
@@ -44,7 +51,7 @@ class SVGatorBackend {
         };
     }
 
-    static async waitOauth(appId, endpoint, oauth_id, timeout) {
+    static async waitOauth(appId, endpoint, oauth_id, timeout, requester = null) {
         endpoint = filterEndpoint(endpoint);
 
         const startTime = new Date().getTime();
@@ -58,6 +65,9 @@ class SVGatorBackend {
             }
             if (leftTime > 0) {
                 url += '&timeout=' + leftTime;
+            }
+            if (requester) {
+                Backend.requester = requester;
             }
             try {
                 lastResponse = await Backend.request(url);
@@ -76,7 +86,7 @@ class SVGatorBackend {
                 app_id: token.app_id,
                 endpoint: endpoint + CLASSIC_API,
                 secret_key: token.secret_key,
-            });
+            }, requester);
         }
         return result;
     }
