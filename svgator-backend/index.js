@@ -4,9 +4,11 @@ const Projects = require("./src/Projects");
 const Renders = require("./src/Renders");
 
 const DEFAULT_ENDPOINT = 'https://app.svgator.com';
+const CLASSIC_API = '/api/app-auth';
+const OAUTH_API = '/api/svgator/oauth';
 
 const defaultOptions = {
-    'endpoint': DEFAULT_ENDPOINT + '/api/app-auth',
+    'endpoint': DEFAULT_ENDPOINT + CLASSIC_API,
 };
 
 function filterEndpoint(endpoint){
@@ -32,7 +34,7 @@ class SVGatorBackend {
 
     static async getOauth(appId, endpoint) {
         endpoint = filterEndpoint(endpoint);
-        let url = endpoint + '/api/svgator/oauth'
+        let url = endpoint + OAUTH_API
             + '?action=create&appId=' + encodeURIComponent(appId)
         const json = await Backend.request(url);
         return {
@@ -47,12 +49,10 @@ class SVGatorBackend {
 
         const startTime = new Date().getTime();
         let lastResponse = null;
-        let lastError = null;
-        let url;
         do {
             const elapsedTime = (new Date().getTime() - startTime) / 1000;
             const leftTime = Math.max(0, Math.round(timeout - elapsedTime));
-            url = endpoint + '/api/svgator/oauth?action=read' + '&oauthId=' + encodeURIComponent(oauth_id);
+            let url = endpoint + OAUTH_API + '?action=read' + '&oauthId=' + encodeURIComponent(oauth_id);
             if (appId) {
                 url += '&appId=' + encodeURIComponent(appId);
             }
@@ -61,9 +61,7 @@ class SVGatorBackend {
             }
             try {
                 lastResponse = await Backend.request(url);
-            } catch(e) {
-                lastError = e;
-            }
+            } catch(e) {}
         } while (
             new Date().getTime() - startTime < timeout * 1000
             && lastResponse?.status === 'pending'
@@ -72,12 +70,12 @@ class SVGatorBackend {
             status: lastResponse?.status || 'error',
         }
         if (lastResponse?.status === 'completed') {
-            const token = lastResponse?.token || null;
+            const token = lastResponse?.token || {};
             result.token = {...token};
             result.backend = new SVGatorBackend({
-                app_id: token?.app_id,
-                endpoint: endpoint + '/api/app-auth',
-                secret_key: token?.secret_key,
+                app_id: token.app_id,
+                endpoint: endpoint + CLASSIC_API,
+                secret_key: token.secret_key,
             });
         }
         return result;
