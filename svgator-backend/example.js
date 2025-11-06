@@ -26,6 +26,11 @@ async function run(auth_code = '') {
     let {access_token, customer_id} = await svgator.token.get(auth_code);
     console.log({access_token, customer_id});
 
+    // obtain the animated SVG from SVGator
+    const profile = await svgator.profile.get(access_token, customer_id);
+
+    console.log("profile details:\n", profile);
+
     // read all SVG projects for a user. limit & offset arguments are optional
     let limit = 1000;
     let offset = 0;

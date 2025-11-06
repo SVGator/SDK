@@ -66,7 +66,11 @@ async function handlePromise(promise) {
         return typeof response === 'object' ? JSON.stringify(response) : response;
     } catch (err) {
         let error = err.message ? err.message : err.toString();
-        return JSON.stringify({error});
+        const output = {error};
+        if (err.response) {
+            output.response = err.response;
+        }
+        return JSON.stringify(output);
     }
 }
 
@@ -95,6 +99,9 @@ switch (action) {
         break;
     case 'export':
         void runCommand('svgator.projects.export(access_token, project_id)');
+        break;
+    case 'get-profile':
+        void runCommand('svgator.profile.get(access_token, customer_id)');
         break;
     case 'get-oauth':
         void runCommand('SVGatorBackend.getOauth(app_id, domain)');

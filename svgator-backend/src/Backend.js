@@ -76,6 +76,7 @@ class Backend {
                     try {
                         json = JSON.parse(data);
                     } catch(e) {
+                        e.response = data;
                         return reject(e);
                     }
                     resolve(json);
