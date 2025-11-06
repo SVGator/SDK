@@ -38,7 +38,7 @@ for(let i = 0; i < process.argv.length; i++) {
     if (arg.toString().match(/^ri_/)) {
         render_id = arg.toString();
     }
-    if (arg.toString().match(/app\.svgator\.(?:com)/)) {
+    if (arg.toString().match(/^(?:app|proxy)\.svgator\.(?:com|net)$/)) {
         domain = 'https://' + arg.toString();
     }
     if (arg.toString().match(/--action\=/)) {
