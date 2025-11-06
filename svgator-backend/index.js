@@ -2,6 +2,7 @@ const Backend = require("./src/Backend");
 const Token = require("./src/Token");
 const Projects = require("./src/Projects");
 const Renders = require("./src/Renders");
+const Profile = require("./src/Profile");
 
 const DEFAULT_ENDPOINT = 'https://app.svgator.com';
 const CLASSIC_API = '/api/app-auth';
@@ -34,6 +35,7 @@ class SVGatorBackend {
         this.token = new Token(this);
         this.projects = new Projects(this);
         this.renders = new Renders(this);
+        this.profile = new Profile(this);
     };
 
     static async getOauth(appId, endpoint, requester = null) {
