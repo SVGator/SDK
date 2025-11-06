@@ -1,4 +1,4 @@
-const SVGatorBackend  = require("./svgator-backend/index.js");
+const SVGatorBackend  = require("@svgator/sdk-backend");
 
 let auth_code = '';
 let access_token = '';
@@ -10,6 +10,7 @@ let action;
 let app_id = '';
 let secret_key = '';
 let filter = null;
+let oauthId = null;
 
 for(let i = 0; i < process.argv.length; i++) {
     let arg = process.argv[i];
@@ -21,6 +22,9 @@ for(let i = 0; i < process.argv.length; i++) {
     }
     if (arg.toString().match(/^ai_/)) {
         app_id = arg.toString();
+    }
+    if (arg.toString().match(/^oi_/)) {
+        oauthId = arg.toString();
     }
     if (arg.toString().match(/^sk_/)) {
         secret_key = arg.toString();
@@ -46,11 +50,12 @@ for(let i = 0; i < process.argv.length; i++) {
     }
 }
 
-let svgator = new SVGatorBackend({
+
+let svgator = app_id && secret_key ? new SVGatorBackend({
     app_id: app_id,
     secret_key: secret_key,
     endpoint: domain + '/api/app-auth',
-});
+}) : null;
 
 /**
  * @param {Promise.<object>} promise
@@ -72,7 +77,7 @@ async function runCommand(command) {
     process.exit();
 }
 
-switch(action) {
+switch (action) {
     case 'get-token':
         void runCommand('svgator.token.get(auth_code)');
         break;
@@ -90,6 +95,12 @@ switch(action) {
         break;
     case 'export':
         void runCommand('svgator.projects.export(access_token, project_id)');
+        break;
+    case 'get-oauth':
+        void runCommand('SVGatorBackend.getOauth(app_id, domain)');
+        break;
+    case 'check-oauth':
+        void runCommand('SVGatorBackend.waitOauth(app_id, domain, oauthId, 10).then(res => ({token: res?.token, status: res?.status}))');
         break;
     default:
         console.log(JSON.stringify({error: "Wrong action"}));
