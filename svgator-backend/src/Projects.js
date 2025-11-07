@@ -3,6 +3,23 @@ class Projects {
         this.inst = inst;
     };
 
+    async customExport(access_token, project_id, options)
+    {
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
+        if (!access_token) {
+            throw new Error("access_token is missing");
+        }
+
+        if (!project_id) {
+            throw new Error("project_id is missing");
+        }
+
+        return await this.inst.backend.post('/export', {access_token, project_id}, options);
+    }
+    
     async export(access_token, project_id)
     {
         if (!this.inst.options.secret_key) {

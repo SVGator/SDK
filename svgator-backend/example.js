@@ -49,6 +49,11 @@ async function run(auth_code = '') {
 
     console.log("exported project:\n", exportedProject);
 
+    // use some extra settings for the export
+    const customExportedProject = await svgator.projects.customExport(access_token, project.id, {options:{tab: 'video', extension: 'mp4'}, animation: {iterations: 5}});
+
+    console.log("exported project:\n", customExportedProject);
+
     let {renders} = await svgator.renders.getAll(access_token, customer_id, limit, offset);
     console.log('# of renders: ', renders.length);
 

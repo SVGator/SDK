@@ -29,9 +29,8 @@ class Backend {
         params.hash = crypto.createHash("sha256").update(params.hash).digest("hex");
     }
 
-    async get(path, params, returnRaw){
-
-        if (!params || !path) {
+    queryString(params) {
+        if (!params) {
             throw new Error("Invalid entity to read");
         }
         params.app_id = this.options.app_id;
@@ -44,21 +43,50 @@ class Backend {
         }
 
         this.addHash(params);
-        params = Object.keys(params).reduce((acc, curr) => {
+        return Object.keys(params).reduce((acc, curr) => {
             return acc + (acc ? '&' : '?') + encodeURIComponent(curr) + '=' + encodeURIComponent(params[curr]);
         }, '');
-        let url = this.options.endpoint + path + params;
+    }
+
+    async get(path, params, returnRaw){
+        if (!path) {
+            throw new Error("Invalid entity to read");
+        }
+
+        let url = this.options.endpoint + path + this.queryString(params);
 
         return await Backend.request(url, returnRaw);
     }
 
-    static request(url, returnRaw, requester){
-        if (this.requester) {
-            return this.requester(url, returnRaw);
+    async post(path, params, postBody){
+        if (!path) {
+            throw new Error("Invalid entity to read");
         }
+
+        let url = this.options.endpoint + path + this.queryString(params);
+
+        return await Backend.request(url, false, postBody);
+    }
+
+    static request(url, returnRaw, postBody){
+        if (this.requester) {
+            return this.requester(url, returnRaw, postBody);
+        }
+
+        postBody = postBody ? JSON.stringify(postBody) : null;
+
         return new Promise((resolve, reject) => {
             let proto = url.match(/^https:/) ? https : http;
-            proto.get(url, (resp) => {
+            const options = {
+                method: postBody ? 'POST' : 'GET',
+            };
+            if (postBody) {
+                options.headers = {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(postBody),
+                }
+            }
+            const clientRequest = proto.request(url, options, (resp) => {
                 let data = '';
 
                 // A chunk of data has been recieved.
@@ -82,9 +110,15 @@ class Backend {
                     resolve(json);
                 });
 
-            }).on("error", (err) => {
+            });
+            clientRequest.on("error", (err) => {
                 reject(err);
             });
+
+            if (postBody) {
+                clientRequest.write(postBody);
+            }
+            clientRequest.end();
         });
     }
 }
