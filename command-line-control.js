@@ -1,4 +1,5 @@
 const SVGatorBackend  = require("@svgator/sdk-backend");
+const {readFileSync} = require('fs');
 
 let auth_code = '';
 let access_token = '';
@@ -11,6 +12,8 @@ let app_id = '';
 let secret_key = '';
 let filter = null;
 let oauthId = null;
+let options = null;
+
 
 for(let i = 0; i < process.argv.length; i++) {
     let arg = process.argv[i];
@@ -38,11 +41,16 @@ for(let i = 0; i < process.argv.length; i++) {
     if (arg.toString().match(/^ri_/)) {
         render_id = arg.toString();
     }
-    if (arg.toString().match(/^(?:app|proxy)\.svgator\.(?:com|net)$/)) {
+    if (arg.toString().trim().match(/(?:app|proxy)\.svgator\.(?:com|net)$/)) {
         domain = 'https://' + arg.toString();
     }
     if (arg.toString().match(/--action\=/)) {
         action = arg.toString().replace(/--action=/, '');
+    }
+    if (arg.toString().match(/--options\=/)) {
+        const tmpFile = arg.toString().replace(/--options=/, '');
+        options = readFileSync(tmpFile).toString();
+        options = JSON.parse(options);
     }
     if (arg.toString().match(/--filter\=/)) {
         filter = arg.toString().replace(/--filter=/, '');
@@ -99,6 +107,9 @@ switch (action) {
         break;
     case 'export':
         void runCommand('svgator.projects.export(access_token, project_id)');
+        break;
+    case 'custom-export':
+        void runCommand('svgator.projects.customExport(access_token, project_id, options)');
         break;
     case 'get-profile':
         void runCommand('svgator.profile.get(access_token, customer_id)');
