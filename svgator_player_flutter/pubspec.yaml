@@ -5,12 +5,13 @@ homepage: "https://www.svgator.com"
 repository: "https://github.com/SVGator/SDK/tree/master/svgator_player_flutter"
 
 environment:
-  sdk: ">=3.0.0 <=3.7.2"
+  sdk: ">=3.0.0 <=3.10.0"
   flutter: ">=3.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.3.2
   webview_flutter: "^4.0.0"
 
 dev_dependencies:
