@@ -26,6 +26,11 @@ async function run(auth_code = '') {
     let {access_token, customer_id} = await svgator.token.get(auth_code);
     console.log({access_token, customer_id});
 
+    // obtain the animated SVG from SVGator
+    const profile = await svgator.profile.get(access_token, customer_id);
+
+    console.log("profile details:\n", profile);
+
     // read all SVG projects for a user. limit & offset arguments are optional
     let limit = 1000;
     let offset = 0;
@@ -43,6 +48,24 @@ async function run(auth_code = '') {
     const exportedProject = await svgator.projects.export(access_token, project.id);
 
     console.log("exported project:\n", exportedProject);
+
+    // use some extra settings for the export
+    const customExportedProject = await svgator.projects.customExport(access_token, project.id, {options:{tab: 'video', extension: 'mp4'}, animation: {iterations: 5}});
+
+    console.log("exported project:\n", customExportedProject);
+
+    let {renders} = await svgator.renders.getAll(access_token, customer_id, limit, offset);
+    console.log('# of renders: ', renders.length);
+
+    if (renders.length > 0) {
+        let render_id = renders[0].id;
+        console.log('first render ID: ', render_id);
+
+        // read a single SVG project based on ID
+        let {render} = await svgator.renders.get(access_token, render_id);
+        console.log('first render: ', render);
+    }
+
     return exportedProject;
 
 }

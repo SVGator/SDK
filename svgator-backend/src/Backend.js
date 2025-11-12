@@ -8,6 +8,7 @@ const crypto = require('crypto');
  */
 
 class Backend {
+    static requester = null;
     constructor(options){
         if (!options) {
             throw new Error("Options are missing");
@@ -28,26 +29,64 @@ class Backend {
         params.hash = crypto.createHash("sha256").update(params.hash).digest("hex");
     }
 
-    async get(path, params, returnRaw){
-        if (!params || !path) {
+    queryString(params) {
+        if (!params) {
             throw new Error("Invalid entity to read");
         }
         params.app_id = this.options.app_id;
         params.time = Math.round(Date.now() / 1000);
 
+        for (let key in params) {
+            if (typeof params[key] === 'object') {
+                params[key] = JSON.stringify(params[key]);
+            }
+        }
+
         this.addHash(params);
-        params = Object.keys(params).reduce((acc, curr) => {
+        return Object.keys(params).reduce((acc, curr) => {
             return acc + (acc ? '&' : '?') + encodeURIComponent(curr) + '=' + encodeURIComponent(params[curr]);
         }, '');
-        let url = this.options.endpoint + path + params;
-
-        return await this.request(url, returnRaw);
     }
 
-    request(url, returnRaw){
+    async get(path, params, returnRaw){
+        if (!path) {
+            throw new Error("Invalid entity to read");
+        }
+
+        let url = this.options.endpoint + path + this.queryString(params);
+
+        return await Backend.request(url, returnRaw);
+    }
+
+    async post(path, params, postBody){
+        if (!path) {
+            throw new Error("Invalid entity to read");
+        }
+
+        let url = this.options.endpoint + path + this.queryString(params);
+
+        return await Backend.request(url, false, postBody);
+    }
+
+    static request(url, returnRaw, postBody){
+        if (this.requester) {
+            return this.requester(url, returnRaw, postBody);
+        }
+
+        postBody = postBody ? JSON.stringify(postBody) : null;
+
         return new Promise((resolve, reject) => {
             let proto = url.match(/^https:/) ? https : http;
-            proto.get(url, (resp) => {
+            const options = {
+                method: postBody ? 'POST' : 'GET',
+            };
+            if (postBody) {
+                options.headers = {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(postBody),
+                }
+            }
+            const clientRequest = proto.request(url, options, (resp) => {
                 let data = '';
 
                 // A chunk of data has been recieved.
@@ -65,15 +104,22 @@ class Backend {
                     try {
                         json = JSON.parse(data);
                     } catch(e) {
+                        e.response = data;
                         return reject(e);
                     }
                     resolve(json);
                 });
 
-            }).on("error", (err) => {
+            });
+            clientRequest.on("error", (err) => {
                 reject(err);
             });
-        })
+
+            if (postBody) {
+                clientRequest.write(postBody);
+            }
+            clientRequest.end();
+        });
     }
 }
 

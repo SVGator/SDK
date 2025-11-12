@@ -64,10 +64,11 @@ async function run(){
     // obtain an access_token based on the auth_code received on front-end
     let {access_token, customer_id} = await svgator.token.get(auth_code);
 
-    // read all SVG projects for a user. limit & offset arguments are optional
+    // read all SVG projects for a user. filter, limit & offset arguments are optional
     let limit = 1000;
     let offset = 0;
-    let {projects} = await svgator.projects.getAll(access_token, customer_id, limit, offset);
+    let filter = {search: 'sampleText'}; // can be null or undefined
+    let {projects} = await svgator.projects.getAll(access_token, customer_id, limit, offset, filter);
 
     let project_id = projects[0].id;
 
