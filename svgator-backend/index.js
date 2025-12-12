@@ -38,16 +38,29 @@ class SVGatorBackend {
         this.profile = new Profile(this);
     };
 
-    static async getOauth(appId, endpoint, requester = null) {
+    static async getOauth(appId, endpoint, requester = null, appName = null) {
         endpoint = filterEndpoint(endpoint);
+
         let url = endpoint + OAUTH_API
             + '?action=create&appId=' + encodeURIComponent(appId)
         if (requester) {
             Backend.requester = requester;
         }
         const json = await Backend.request(url);
+        const queryParts = [];
+        queryParts.push('appId=' + encodeURIComponent(appId || 'dynamic'));
+
+        if (json && json.oauth && json.oauth.writer) {
+            queryParts.push('oauth_writer=' + encodeURIComponent(json.oauth.writer));
+        }
+
+        if (appName) {
+            queryParts.push('app_name=' + encodeURIComponent(appName));
+        }
+
+        const queryString = queryParts.join('&');
         return {
-            url: endpoint + '/app-auth/connect?appId=' + encodeURIComponent(appId || 'dynamic') + '&oauth_writer=' + encodeURIComponent(json?.oauth?.writer),
+            url: endpoint + '/app-auth/connect?' + queryString,
             id: json?.oauth?.id,
             response: json,
         };

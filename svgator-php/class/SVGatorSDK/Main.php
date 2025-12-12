@@ -14,10 +14,15 @@ class Main {
 	 *
 	 * @return string
 	 */
-	public static function getLoginUrl($appId, $redirectUrl) {
-		return 'https://app.svgator.com/app-auth/connect'
-            . '?appId=' . urlencode($appId)
-            . '&redirect=' . urlencode($redirectUrl);
+	public static function getLoginUrl($appId, $redirectUrl, $appName = null) {
+        $queryParams = [
+            'appId'    => $appId,
+            'redirect' => $redirectUrl,
+        ];
+        if ($appName) {
+            $queryParams['appName'] = $appName;
+        }
+        return 'https://app.svgator.com/app-auth/connect?' . http_build_query($queryParams);
 	}
 
 	/**
