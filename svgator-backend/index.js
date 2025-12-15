@@ -49,10 +49,7 @@ class SVGatorBackend {
         const json = await Backend.request(url);
         const queryParts = [];
         queryParts.push('appId=' + encodeURIComponent(appId || 'dynamic'));
-
-        if (json && json.oauth && json.oauth.writer) {
-            queryParts.push('oauth_writer=' + encodeURIComponent(json.oauth.writer));
-        }
+        queryParts.push('oauth_writer=' + encodeURIComponent(json?.oauth?.writer));
 
         if (appName) {
             queryParts.push('app_name=' + encodeURIComponent(appName));
