@@ -59,7 +59,7 @@ for(let i = 0; i < process.argv.length; i++) {
 }
 
 
-let svgator = app_id && secret_key ? new SVGatorBackend({
+let svgator = app_id && (secret_key || action === 'get-token') ? new SVGatorBackend({
     app_id: app_id,
     secret_key: secret_key,
     endpoint: domain + '/api/app-auth',
