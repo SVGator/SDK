@@ -20,7 +20,7 @@ class Main {
             'redirect' => $redirectUrl,
         ];
         if ($appName) {
-            $queryParams['appName'] = $appName;
+            $queryParams['app_name'] = $appName;
         }
         return 'https://app.svgator.com/app-auth/connect?' . http_build_query($queryParams);
 	}

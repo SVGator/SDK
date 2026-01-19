@@ -47,17 +47,16 @@ class SVGatorBackend {
             Backend.requester = requester;
         }
         const json = await Backend.request(url);
-        const queryParts = [];
-        queryParts.push('appId=' + encodeURIComponent(appId || 'dynamic'));
-        queryParts.push('oauth_writer=' + encodeURIComponent(json?.oauth?.writer));
-
+        const queryParts = new URLSearchParams({
+            appId: appId || 'dynamic',
+            oauth_writer: json?.oauth?.writer,
+        });
         if (appName) {
-            queryParts.push('app_name=' + encodeURIComponent(appName));
+            queryParts.set('app_name', appName);
         }
 
-        const queryString = queryParts.join('&');
         return {
-            url: endpoint + '/app-auth/connect?' + queryString,
+            url: endpoint + '/app-auth/connect?' + queryParts.toString(),
             id: json?.oauth?.id,
             response: json,
         };
