@@ -1,5 +1,3 @@
-const https = require('https');
-const http = require('http');
 const crypto = require('crypto');
 
 /**
@@ -20,16 +18,31 @@ class Backend {
         this.options = {...options};
     };
 
-    addHash(params){
+    // Cross-platform SHA-256
+    static async _sha256Hex(input) {
+        try {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(input);
+
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        } catch(e) {
+            return crypto.createHash("sha256").update(input).digest("hex");
+        }
+    }
+
+    async addHash(params){
         params.hash = Object.keys(params).sort().reduce((acc, curr) => {
             return acc + params[curr];
         }, '');
 
         params.hash += this.options.secret_key || '';
-        params.hash = crypto.createHash("sha256").update(params.hash).digest("hex");
+        params.hash = await Backend._sha256Hex(params.hash);
     }
 
-    queryString(params) {
+    async queryString(params) {
         if (!params) {
             throw new Error("Invalid entity to read");
         }
@@ -42,7 +55,7 @@ class Backend {
             }
         }
 
-        this.addHash(params);
+        await this.addHash(params);
         return Object.keys(params).reduce((acc, curr) => {
             return acc + (acc ? '&' : '?') + encodeURIComponent(curr) + '=' + encodeURIComponent(params[curr]);
         }, '');
@@ -53,7 +66,7 @@ class Backend {
             throw new Error("Invalid entity to read");
         }
 
-        let url = this.options.endpoint + path + this.queryString(params);
+        let url = this.options.endpoint + path + await this.queryString(params);
 
         return await Backend.request(url, returnRaw);
     }
@@ -63,63 +76,59 @@ class Backend {
             throw new Error("Invalid entity to read");
         }
 
-        let url = this.options.endpoint + path + this.queryString(params);
+        let url = this.options.endpoint + path + await this.queryString(params);
 
         return await Backend.request(url, false, postBody);
     }
 
-    static request(url, returnRaw, postBody){
+    static async request(url, returnRaw, postBody) {
         if (this.requester) {
             return this.requester(url, returnRaw, postBody);
         }
 
-        postBody = postBody ? JSON.stringify(postBody) : null;
+        const isPost = !!postBody;
+        const body = isPost ? JSON.stringify(postBody) : undefined;
 
-        return new Promise((resolve, reject) => {
-            let proto = url.match(/^https:/) ? https : http;
-            const options = {
-                method: postBody ? 'POST' : 'GET',
-            };
-            if (postBody) {
-                options.headers = {
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(postBody),
-                }
-            }
-            const clientRequest = proto.request(url, options, (resp) => {
-                let data = '';
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
 
-                // A chunk of data has been recieved.
-                resp.on('data', (chunk) => {
-                    data += chunk;
-                });
+        try {
 
-                // The whole response has been received. Print out the result.
-                resp.on('end', () => {
-                    if (returnRaw) {
-                        return resolve(data);
-                    }
-
-                    let json;
-                    try {
-                        json = JSON.parse(data);
-                    } catch(e) {
-                        e.response = data;
-                        return reject(e);
-                    }
-                    resolve(json);
-                });
-
-            });
-            clientRequest.on("error", (err) => {
-                reject(err);
+            const res = await fetch(url, {
+                method: isPost ? 'POST' : 'GET',
+                headers: isPost ? {
+                    'Content-Type': 'application/json'
+                } : undefined,
+                body,
+                signal: controller.signal
             });
 
-            if (postBody) {
-                clientRequest.write(postBody);
+            const text = await res.text();
+            clearTimeout(timeout);
+
+            if (!res.ok) {
+                const error = new Error(`HTTP ${res.status}`);
+                error.response = text;
+                throw error;
             }
-            clientRequest.end();
-        });
+
+            if (returnRaw) {
+                return text;
+            }
+
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (e) {
+                e.response = text;
+                throw e;
+            }
+
+            return json;
+        } catch(e) {
+            clearTimeout(timeout);
+            throw e;
+        }
     }
 }
 

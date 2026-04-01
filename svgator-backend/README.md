@@ -37,7 +37,7 @@ Creating an application on the fly is also possible using [`appId=dynamic`](../.
 
 ### Requirements
 
-- nodejs >= 7.6
+- nodejs >= 18.0
 
 ### Installation
 
