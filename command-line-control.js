@@ -179,6 +179,30 @@ switch (action) {
     case 'save-project':
         void runCommand('svgator.backend.post("/project", Object.assign({access_token, project_id}, filter || {}), options || {smokeTest: true})');
         break;
+    // Project-part edits via the typed svgator.projectParts.* wrappers. `filter`
+    // carries item/target/position/preview; `options` is the body (the new value
+    // for update, the element subtree for inserts; delete/move take no body).
+    case 'part-update':
+        void runCommand('svgator.projectParts.update(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
+        break;
+    case 'part-before':
+        void runCommand('svgator.projectParts.before(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
+        break;
+    case 'part-after':
+        void runCommand('svgator.projectParts.after(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
+        break;
+    case 'part-prepend':
+        void runCommand('svgator.projectParts.prepend(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
+        break;
+    case 'part-append':
+        void runCommand('svgator.projectParts.append(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
+        break;
+    case 'part-delete':
+        void runCommand('svgator.projectParts.delete(access_token, project_id, filter?.item, {preview: filter?.preview})');
+        break;
+    case 'part-move':
+        void runCommand('svgator.projectParts.move(access_token, project_id, filter?.item, filter?.target, filter?.position, {preview: filter?.preview})');
+        break;
     case 'get-oauth':
         void runCommand('SVGatorBackend.getOauth(app_id, domain)');
         break;

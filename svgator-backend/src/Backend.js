@@ -78,16 +78,20 @@ class Backend {
 
         let url = this.options.endpoint + path + await this.queryString(params);
 
-        return await Backend.request(url, false, postBody);
+        // Force the POST verb: some edits (delete/move) carry no body and some
+        // values are falsy (e.g. a keyframe `time` of 0), so the verb must not be
+        // inferred from the body's truthiness.
+        return await Backend.request(url, false, postBody, true);
     }
 
-    static async request(url, returnRaw, postBody) {
+    static async request(url, returnRaw, postBody, forcePost) {
         if (this.requester) {
-            return this.requester(url, returnRaw, postBody);
+            return this.requester(url, returnRaw, postBody, forcePost);
         }
 
-        const isPost = !!postBody;
-        const body = isPost ? JSON.stringify(postBody) : undefined;
+        const isPost = !!forcePost || postBody !== undefined;
+        // Serialize any defined body (including falsy values like 0/false/"").
+        const body = postBody !== undefined ? JSON.stringify(postBody) : undefined;
 
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 10000);
