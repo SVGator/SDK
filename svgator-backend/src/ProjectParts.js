@@ -45,7 +45,7 @@ class ProjectParts {
             throw new Error("value is missing");
         }
 
-        return await this._edit('update', access_token, project_id, item, value, null, options);
+        return await this._edit('update', access_token, project_id, item, value, options);
     }
 
     /** Insert a new element as the previous sibling of `item`. */
@@ -68,14 +68,18 @@ class ProjectParts {
         return await this._insert('append', access_token, project_id, item, element, options);
     }
 
-    /** Remove `item` and its whole subtree. */
+    /**
+     * Remove `item`: an element (and its whole subtree), a whole animator channel,
+     * or a single keyframe. The body is ignored.
+     */
     async delete(access_token, project_id, item, options){
-        return await this._edit('delete', access_token, project_id, item, undefined, null, options);
+        return await this._edit('delete', access_token, project_id, item, undefined, options);
     }
 
     /**
      * Relocate the existing `item` element (preserving its id and animators) to
-     * `target`/`position`.
+     * `target`/`position`. The destination travels in the request body as
+     * `{ target, position }` (not the signed query).
      *
      * @param {string} target id-anchored path of the destination anchor element
      * @param {string} position before|after (relative to a sibling target) or
@@ -90,7 +94,7 @@ class ProjectParts {
             throw new Error("position must be one of: " + MOVE_POSITIONS.join(', '));
         }
 
-        return await this._edit('move', access_token, project_id, item, undefined, {target, position}, options);
+        return await this._edit('move', access_token, project_id, item, {target, position}, options);
     }
 
     /**
@@ -102,7 +106,7 @@ class ProjectParts {
             throw new Error("element is missing or not an object");
         }
 
-        return await this._edit(action, access_token, project_id, item, element, null, options);
+        return await this._edit(action, access_token, project_id, item, element, options);
     }
 
     /** Shared required-argument guards for every edit call. */
@@ -128,19 +132,14 @@ class ProjectParts {
      * Build and POST a single edit to `[POST] /project-part`.
      *
      * @param {string} action update|before|after|prepend|append|delete|move
-     * @param {*} body request payload (new value / new element); undefined for
-     *                 delete/move which carry no body
-     * @param {object|null} extraArgs extra query params (e.g. target/position for move)
+     * @param {*} body request payload (new value / new element / {target,position}
+     *                 for move); undefined for delete which carries no body
      * @param {object} [options] { preview: 'none'|'image'|'module' }
      */
-    async _edit(action, access_token, project_id, item, body, extraArgs, options){
+    async _edit(action, access_token, project_id, item, body, options){
         this._assertEditArgs(access_token, project_id, item);
 
         let args = {access_token, project_id, item, action};
-
-        if (extraArgs) {
-            Object.assign(args, extraArgs);
-        }
 
         if (options && options.preview) {
             args.preview = options.preview;
