@@ -82,6 +82,35 @@ class Projects {
         return await this.inst.backend.get('/project', {access_token, project_id});
     }
 
+    /**
+     * Create a new project or replace an existing project's JSON.
+     * `project` is the full project body (`{ title?, document, definitions?,
+     * options? }`) — `title` rides inside the body. Omit `project_id` to
+     * **create** a new project owned by the token's customer; pass it (prefixed
+     * `pi_`, same as the GET calls) to **replace** that project's whole JSON.
+     */
+    async save(access_token, project, project_id){
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
+        if (!access_token) {
+            throw new Error("access_token is missing");
+        }
+
+        if (!project || typeof project !== 'object') {
+            throw new Error("project is missing or not an object");
+        }
+
+        let args = {access_token};
+
+        if (project_id) {
+            args.project_id = project_id;
+        }
+
+        return await this.inst.backend.post('/project', args, project);
+    }
+
     async skeleton(access_token, project_id, options){
         if (!this.inst.options.secret_key) {
             throw new Error("options.secret_key is missing");
