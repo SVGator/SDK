@@ -2,6 +2,8 @@ const Backend = require("./src/Backend");
 const Token = require("./src/Token");
 const Projects = require("./src/Projects");
 const ProjectParts = require("./src/ProjectParts");
+const Assets = require("./src/Assets");
+const Folders = require("./src/Folders");
 const Renders = require("./src/Renders");
 const Profile = require("./src/Profile");
 
@@ -36,6 +38,8 @@ class SVGatorBackend {
         this.token = new Token(this);
         this.projects = new Projects(this);
         this.projectParts = new ProjectParts(this);
+        this.assets = new Assets(this);
+        this.folders = new Folders(this);
         this.renders = new Renders(this);
         this.profile = new Profile(this);
     };

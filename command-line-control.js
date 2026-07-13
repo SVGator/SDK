@@ -1,3 +1,7 @@
+// @todo once new SDK goes live, let's rather upgrade node module & use the public node module
+// import SVGatorBackend from "@svgator/sdk-backend";
+// ESM has no directory resolution, so point at the package entry file explicitly
+// (the dir's package.json "main" is ignored for relative imports).
 import SVGatorBackend from "@svgator/sdk-backend";
 import {readFileSync} from 'fs';
 
@@ -5,6 +9,8 @@ let auth_code = '';
 let access_token = '';
 let customer_id = '';
 let project_id = '';
+let asset_id = '';
+let folder_id = '';
 let render_id = '';
 let domain = 'http://localhost:8080';
 let action;
@@ -27,7 +33,7 @@ function emit(command, output) {
 function collectVars() {
     const all = {
         oauthId, filter, app_id, secret_key, action, domain,
-        render_id, project_id, customer_id, access_token, auth_code, options,
+        render_id, project_id, asset_id, folder_id, customer_id, access_token, auth_code, options,
     };
     const vars = {};
     for (const [key, value] of Object.entries(all)) {
@@ -73,7 +79,7 @@ process.on('uncaughtException', (err) => fail('script', err));
 process.on('unhandledRejection', (err) => fail('script', err));
 
 try {
-    for(let i = 0; i < process.argv.length; i++) {
+    for (let i = 0; i < process.argv.length; i++) {
         let arg = process.argv[i];
         if (arg.toString().match(/^ac_/)) {
             auth_code = arg.toString();
@@ -95,6 +101,12 @@ try {
         }
         if (arg.toString().match(/^pi_/)) {
             project_id = arg.toString();
+        }
+        if (arg.toString().match(/^as_/)) {
+            asset_id = arg.toString();
+        }
+        if (arg.toString().match(/^fd_/)) {
+            folder_id = arg.toString();
         }
         if (arg.toString().match(/^ri_/)) {
             render_id = arg.toString();
@@ -166,22 +178,47 @@ switch (action) {
     case 'get-profile':
         void runCommand('svgator.profile.get(access_token, customer_id)');
         break;
-    // TODO: switch to typed svgator.projects.* wrappers once Task M4 adds them to the @svgator/sdk-backend package (skeleton / getPart / savePart / save)
     case 'get-skeleton':
-        void runCommand('svgator.backend.get("/skeleton", Object.assign({access_token, project_id}, filter || {}))');
+        void runCommand('svgator.projects.skeleton(access_token, project_id, filter)');
         break;
     case 'get-project-part':
-        void runCommand('svgator.backend.get("/project-part", Object.assign({access_token, project_id}, filter || {}))');
+        void runCommand('svgator.projectParts.get(access_token, project_id, filter?.item, filter)');
         break;
+    // save-project-part carries no explicit action, so it maps to the default
+    // update edit (item from the filter, new value in the body).
     case 'save-project-part':
-        void runCommand('svgator.backend.post("/project-part", Object.assign({access_token, project_id}, filter || {}), options || {smokeTest: true})');
+        void runCommand('svgator.projectParts.update(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
         break;
     case 'save-project':
-        void runCommand('svgator.backend.post("/project", Object.assign({access_token, project_id}, filter || {}), options || {smokeTest: true})');
+        void runCommand('svgator.projects.save(access_token, options || {smokeTest: true}, project_id)');
+        break;
+    // Asset endpoints. list takes customer_id + limit/offset/search; get/save address
+    // a single asset by asset_id (empty asset_id on save = create).
+    case 'get-assets':
+        void runCommand('svgator.assets.getAll(access_token, customer_id, filter?.limit, filter?.offset, filter?.search ? {search: filter.search} : null)');
+        break;
+    case 'get-asset':
+        void runCommand('svgator.assets.get(access_token, asset_id)');
+        break;
+    case 'save-asset':
+        void runCommand('svgator.assets.save(access_token, options || {smokeTest: true}, asset_id)');
+        break;
+    // Folder endpoints. list takes customer_id + limit/offset/search; get/save address
+    // a single folder by folder_id (empty folder_id on save = create). Only `title`
+    // is editable through save.
+    case 'get-folders':
+        void runCommand('svgator.folders.getAll(access_token, customer_id, filter?.limit, filter?.offset, filter?.search ? {search: filter.search} : null)');
+        break;
+    case 'get-folder':
+        void runCommand('svgator.folders.get(access_token, folder_id)');
+        break;
+    case 'save-folder':
+        void runCommand('svgator.folders.save(access_token, options || {title: "Smoke test folder"}, folder_id)');
         break;
     // Project-part edits via the typed svgator.projectParts.* wrappers. `filter`
-    // carries item/target/position/preview; `options` is the body (the new value
-    // for update, the element subtree for inserts; delete/move take no body).
+    // carries item/preview; `options` is the body (the new value for update, the
+    // element subtree for inserts, { target, position } for move; delete takes no
+    // body).
     case 'part-update':
         void runCommand('svgator.projectParts.update(access_token, project_id, filter?.item, options, {preview: filter?.preview})');
         break;
@@ -201,7 +238,7 @@ switch (action) {
         void runCommand('svgator.projectParts.delete(access_token, project_id, filter?.item, {preview: filter?.preview})');
         break;
     case 'part-move':
-        void runCommand('svgator.projectParts.move(access_token, project_id, filter?.item, filter?.target, filter?.position, {preview: filter?.preview})');
+        void runCommand('svgator.projectParts.move(access_token, project_id, filter?.item, options?.target, options?.position, {preview: filter?.preview})');
         break;
     case 'get-oauth':
         void runCommand('SVGatorBackend.getOauth(app_id, domain)');

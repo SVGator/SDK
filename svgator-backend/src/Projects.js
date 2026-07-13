@@ -84,9 +84,12 @@ class Projects {
 
     /**
      * Create a new project or replace an existing project's JSON.
-     * `project` is the full project body (`{ title?, document, definitions?,
-     * options? }`) — `title` rides inside the body. Omit `project_id` to
-     * **create** a new project owned by the token's customer; pass it (prefixed
+     * `project` is the full project body (`{ title?, folder?, document,
+     * definitions?, options? }`) — `title` and `folder` ride inside the body.
+     * `folder` is a folder id (`fd_…`, sibling of `title`) placing the project in
+     * that folder: omit to leave it unchanged (kept on replace, none on create),
+     * pass `""`/`null` to clear it, or a valid id to assign it. Omit `project_id`
+     * to **create** a new project owned by the token's customer; pass it (prefixed
      * `pi_`, same as the GET calls) to **replace** that project's whole JSON.
      */
     async save(access_token, project, project_id){
