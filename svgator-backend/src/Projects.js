@@ -143,6 +143,37 @@ class Projects {
 
         return await this.inst.backend.get('/skeleton', args);
     }
+
+    /**
+     * Duplicate or move a project in a single call.
+     * `body` is the organize body — `action` (`"duplicate"` | `"move"`, required)
+     * selects the operation; `folder` (a `fd_…` id, optional) and `title`
+     * (optional) ride inside it. For **duplicate**: `title` names the copy
+     * (defaults to the source title) and `folder` places it (omit to reuse the
+     * source folder, pass `""`/`null` for none). For **move**: `title` renames
+     * the project and `folder` relocates it (omit either to leave it unchanged);
+     * moving into the current folder with no rename is rejected. When neither
+     * `folder` nor `title` is set, still pass the `action` in the body.
+     */
+    async organize(access_token, project_id, body){
+        if (!this.inst.options.secret_key) {
+            throw new Error("options.secret_key is missing");
+        }
+
+        if (!access_token) {
+            throw new Error("access_token is missing");
+        }
+
+        if (!project_id) {
+            throw new Error("project_id is missing");
+        }
+
+        if (!body || typeof body !== 'object') {
+            throw new Error("body is missing or not an object");
+        }
+
+        return await this.inst.backend.post('/organize', {access_token, project_id}, body);
+    }
 }
 
 module.exports = Projects;

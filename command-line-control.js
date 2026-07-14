@@ -192,6 +192,11 @@ switch (action) {
     case 'save-project':
         void runCommand('svgator.projects.save(access_token, options || {smokeTest: true}, project_id)');
         break;
+    // organize duplicates or moves the project named by project_id; the
+    // {action: "duplicate"|"move", folder?, title?} body rides in options.
+    case 'organize':
+        void runCommand('svgator.projects.organize(access_token, project_id, options)');
+        break;
     // Asset endpoints. list takes customer_id + limit/offset/search; get/save address
     // a single asset by asset_id (empty asset_id on save = create).
     case 'get-assets':
