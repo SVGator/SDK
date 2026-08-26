@@ -49,7 +49,7 @@ class SVGatorOpener {
         return lastResponse;
     }
 
-    static open(appId, endpoint, oauth_writer) {
+    static open(appId, endpoint, oauth_writer, appName) {
         return new Promise(function(resolve, reject) {
             let windowWatcher;
             let msgSent = false;
@@ -87,6 +87,9 @@ class SVGatorOpener {
                     + '&origin=' + encodeURIComponent(window.origin);
                 if (oauth_writer) {
                     url += '&oauth_writer=' + encodeURIComponent(oauth_writer);
+                }
+                if (appName) {
+                    url += '&app_name=' + encodeURIComponent(appName);
                 }
                 let w = window.open(url, '_blank', SVGatorOpener.windowOptions());
 
